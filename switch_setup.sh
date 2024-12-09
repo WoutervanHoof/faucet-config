@@ -10,11 +10,11 @@ usage="USAGE: switch_setup.sh IFNAME CONTROLLER_IP"
 ifname=$1
 controller_ip=$2
 
-if ! $(ip link show "$ifname") ; then
+if not $(ip link show "$ifname") ; then
 	die "$usage; ERROR: IFNAME not found"
 fi
 
-if [[ -z "$controller_ip" ]]; then 
+if [[ -z "$controller_ip" ]] ; then 
 	die "$usage"
 fi
 
