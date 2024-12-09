@@ -35,9 +35,9 @@ sudo ovs-vsctl add-br br0 --may-exist \
 #	ip addr add "$ip" dev br0
 #done
 
-for ip in $wpan_ips; do
-	sudo ip addr add "$ip" dev br0
-done
+# for ip in $wpan_ips; do
+# 	sudo ip addr add "$ip" dev br0
+# done
 
 # sudo ip route append default via "$default_ip" dev br0
 
