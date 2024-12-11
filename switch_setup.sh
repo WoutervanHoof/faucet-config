@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+set -euxo pipefail
+
 die () {
 	echo $1
 	exit 1
