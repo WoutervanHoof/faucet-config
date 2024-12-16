@@ -100,6 +100,7 @@ case $1 in
         ;;
     -t | --test)
         TEST=1
+        shift
         ;;
     -h | --help)
         usage
