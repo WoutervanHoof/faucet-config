@@ -42,8 +42,8 @@ test_up() {
 }
 
 test_down(){
-    ovs-docker del-port "$BRIDGE" "$TEST_NAME"1
-    ovs-docker del-port "$BRIDGE" "$TEST_NAME"2
+    ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"1
+    ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"2
 
     docker stop br_test1 br_test2
     docker rm br_test1 br_test2
