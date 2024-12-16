@@ -50,12 +50,9 @@ test_down(){
     
 }
 
-UTIL=$(basename $0)
-search_path ovs-vsctl
-search_path docker
-
+NAME=$(basename "$0")
 if (ip netns) > /dev/null 2>&1; then :; else
-    echo >&2 "$UTIL: ip utility not found (or it does not support netns),"\
+    echo >&2 "$NAME: ip utility not found (or it does not support netns),"\
              "cannot proceed"
     exit 1
 fi
@@ -81,7 +78,6 @@ usage() {
 EOF
 }
 
-NAME=$(basename $0)
 TEST=0
 case $1 in
     up)
@@ -96,14 +92,14 @@ case $1 in
     down)
         bridge_down
 
-        if $(docker ps | grep "$TEST_NAME") ; then
+        if docker ps | grep "$TEST_NAME" > /dev/null ; then
             test_down
         fi
 
         exit 0
         ;;
     -t | --test)
-        $TEST=1
+        TEST=1
         ;;
     -h | --help)
         usage
