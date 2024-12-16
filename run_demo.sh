@@ -83,7 +83,7 @@ case $1 in
     up)
         bridge_up
 
-        if $TEST ; then
+        if [ $TEST ] ; then
             test_up
         fi
         
