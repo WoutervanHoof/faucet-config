@@ -50,18 +50,6 @@ test_down(){
     
 }
 
-NAME=$(basename "$0")
-if (ip netns) > /dev/null 2>&1; then :; else
-    echo >&2 "$NAME: ip utility not found (or it does not support netns),"\
-             "cannot proceed"
-    exit 1
-fi
-
-if [ $# -eq 0 ]; then
-    usage
-    exit 0
-fi
-
 usage() {
     cat <<-EOF
         ${NAME}: Sets up the demo environment for MultiMUD (TODO title).
@@ -77,6 +65,18 @@ usage() {
         --test              Add two docker containers to the bridge for testing
 EOF
 }
+
+NAME=$(basename "$0")
+if (ip netns) > /dev/null 2>&1; then :; else
+    echo >&2 "$NAME: ip utility not found (or it does not support netns),"\
+             "cannot proceed"
+    exit 1
+fi
+
+if [ $# -eq 0 ]; then
+    usage
+    exit 0
+fi
 
 TEST=0
 case $1 in
