@@ -42,8 +42,8 @@ test_up() {
 }
 
 test_down(){
-    ovs-docker --if-exists del-port "$BRIDGE" eth0 "$TEST_NAME"1
-    ovs-docker --if-exists del-port "$BRIDGE" eth0 "$TEST_NAME"2
+    ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"1 || true
+    ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"2 || true
 
     docker stop br_test1 br_test2 || true
     docker rm br_test1 br_test2 || true
