@@ -79,35 +79,38 @@ if [ $# -eq 0 ]; then
 fi
 
 TEST=0
-case $1 in
-    up)
-        bridge_up
 
-        if [ $TEST ] ; then
-            test_up
-        fi
-        
-        exit 0
-        ;;
-    down)
-        bridge_down
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        up)
+            bridge_up
 
-        if docker ps | grep "$TEST_NAME" > /dev/null ; then
-            test_down
-        fi
+            if [ $TEST ] ; then
+                test_up
+            fi
+            
+            exit 0
+            ;;
+        down)
+            bridge_down
 
-        exit 0
-        ;;
-    -t | --test)
-        TEST=1
-        shift
-        ;;
-    -h | --help)
-        usage
-        exit 0
-        ;;
-    *)
-        echo >&2 "$UTIL: unknown command \"$1\" (use -h, --help for help)"
-        exit 1
-        ;;
-esac
+            if docker ps | grep "$TEST_NAME" > /dev/null ; then
+                test_down
+            fi
+
+            exit 0
+            ;;
+        -t | --test)
+            TEST=1
+            shift
+            ;;
+        -h | --help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo >&2 "$UTIL: unknown command \"$1\" (use -h, --help for help)"
+            exit 1
+            ;;
+    esac
+done
