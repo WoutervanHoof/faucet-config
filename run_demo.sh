@@ -45,10 +45,22 @@ test_down(){
     ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"1 || true
     ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"2 || true
 
-    docker stop br_test1 br_test2 || true
-    docker rm br_test1 br_test2 || true
+    docker stop "$TEST_NAME"1 "$TEST_NAME"2 || true
+    docker rm "$TEST_NAME"1 "$TEST_NAME"2 || true
     
 }
+
+border_router_up() {
+    modprobe ip6table_filter
+
+    docker run -d --name="thread-br" --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=127.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
+}
+
+border_router_down() {
+    docker stop thread_br || true
+    docker rm "thread-br" || true
+}
+
 
 usage() {
     cat <<-EOF
@@ -89,6 +101,8 @@ while [[ "$#" -gt 0 ]]; do
                 test_up
             fi
             
+            border_router_up
+            
             exit 0
             ;;
         down)
@@ -97,6 +111,8 @@ while [[ "$#" -gt 0 ]]; do
             if docker ps | grep "$TEST_NAME" > /dev/null ; then
                 test_down
             fi
+
+            border_router_down
 
             exit 0
             ;;
