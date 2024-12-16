@@ -46,5 +46,5 @@ sudo ovs-vsctl add-br br0 --may-exist \
 sudo ovs-vsctl \
 #	-- add-port br0 "$ifname" \
 # 	-- set interface "$ifname" ofport_request=1 \
-	-- add-port br0 wpan0 \
-	-- set interface wpan0 ofport_request=2
+	# -- add-port br0 wpan0 \
+	# -- set interface wpan0 ofport_request=2
