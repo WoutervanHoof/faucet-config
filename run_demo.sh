@@ -37,8 +37,8 @@ test_up() {
     docker run -d --name="$TEST_NAME"1 --net=none nginx:alpine
     docker run -d --name="$TEST_NAME"2 --net=none nginx:alpine
 
-    ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddres="$TEST1_IP" --gateway="$BRIDGE_IP"
-    ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddres="$TEST2_IP" --gateway="$BRIDGE_IP"
+    ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
+    ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
 }
 
 test_down(){
