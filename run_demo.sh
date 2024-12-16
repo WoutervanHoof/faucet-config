@@ -29,8 +29,8 @@ bridge_up() {
 }
 
 bridge_down() {
-    ip addr flush dev "$BRIDGE"
-    ovs-vsctl del-br "$BRIDGE"
+    ip addr flush dev "$BRIDGE" || true
+    ovs-vsctl --if-exists del-br "$BRIDGE"
 }
 
 test_up() {
@@ -42,11 +42,11 @@ test_up() {
 }
 
 test_down(){
-    ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"1
-    ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"2
+    ovs-docker --if-exists del-port "$BRIDGE" eth0 "$TEST_NAME"1
+    ovs-docker --if-exists del-port "$BRIDGE" eth0 "$TEST_NAME"2
 
-    docker stop br_test1 br_test2
-    docker rm br_test1 br_test2
+    docker stop br_test1 br_test2 || true
+    docker rm br_test1 br_test2 || true
     
 }
 
