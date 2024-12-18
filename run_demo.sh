@@ -53,11 +53,11 @@ test_down(){
 border_router_up() {
     modprobe ip6table_filter
 
-    docker run -d --name="thread-br" --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=127.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
+    docker run -d --name="thread-br" --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=172.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
 }
 
 border_router_down() {
-    docker stop thread_br || true
+    docker stop "thread-br" || true
     docker rm "thread-br" || true
 }
 
@@ -71,7 +71,7 @@ usage() {
         up                  Run all components
 
         down                Remove all components
-        
+
         Options:
         -h, --help          display this help message.
         --test              Add two docker containers to the bridge for testing
@@ -91,18 +91,19 @@ if [ $# -eq 0 ]; then
 fi
 
 TEST=0
+BRIDGE_ONLY=0
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         up)
             bridge_up
 
-            if [ $TEST ] ; then
+            if [ "$TEST" -eq "1" ] ; then
                 test_up
             fi
-            
+
             border_router_up
-            
+
             exit 0
             ;;
         down)
@@ -120,6 +121,10 @@ while [[ "$#" -gt 0 ]]; do
             TEST=1
             shift
             ;;
+        -b | --bridge-only)
+            BRIDGE_ONLY=1
+            shift
+            ;;
         -h | --help)
             usage
             exit 0
@@ -130,3 +135,4 @@ while [[ "$#" -gt 0 ]]; do
             ;;
     esac
 done
+
