@@ -13,9 +13,10 @@ BRIDGE="br0"
 TEST_NAME="br_test"
 
 CONTROLLER_IP="10.42.0.1"
-BRIDGE_IP="192.168.2.1"
-TEST1_IP="192.168.2.3/24"
-TEST2_IP="192.168.2.4/24"
+BRIDGE_IP="10.42.0.11"
+BR_IP="10.42.0.12/24"
+TEST1_IP="10.42.0.13/24"
+TEST2_IP="10.42.0.14/24"
 
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
@@ -53,7 +54,9 @@ test_down(){
 border_router_up() {
     modprobe ip6table_filter
 
-    docker run -d --name="thread-br" --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=172.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
+    docker run -d --name="thread-br" --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=172.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
+
+    ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BR_IP" --gateway="$CONTROLLER_IP"
 }
 
 border_router_down() {
