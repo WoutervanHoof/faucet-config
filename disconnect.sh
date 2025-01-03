@@ -24,6 +24,3 @@ sudo ip a flush wlan0
 sudo dhclient wlan0
 
 #sudo ip route append default via 10.42.0.1 dev wlan0
-
-
-
