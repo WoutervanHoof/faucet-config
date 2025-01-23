@@ -12,6 +12,7 @@ set -euxo pipefail
 BRIDGE="br0"
 TEST_NAME="br_test"
 
+NETWORK_SUBMASK="10.42.0.0/24"
 CONTROLLER_IP="10.42.0.1"
 BRIDGE_IP="10.42.0.11"
 BR_IP="10.42.0.12/24"
