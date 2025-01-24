@@ -11,6 +11,6 @@ if [[ ! -f /dev/ttyACM0 ]] ; then
 	sed -i -r -e "s#/dev/ttyACM.#${dev_file}#" docker-compose.yml
 fi
 
-docker-compose up
-
 docker container prune
+
+docker-compose up
