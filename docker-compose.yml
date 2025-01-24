@@ -12,11 +12,11 @@ services:
     dns:
      - 127.0.0.1
     privileged: true
-    command: [ "--radio-url", "spinel+hdlc+uart:///dev/ttyACM0"]
+    command: [ "--radio-url", "spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=115200&uart-flow-control"]
     networks:
       ipv6net:
         ipv6_address: fdbe:8cb7:f64c:1::2
-  
+
   attacker:
     image: nginx:alpine
     networks:
