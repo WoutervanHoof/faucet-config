@@ -12,12 +12,12 @@ set -euxo pipefail
 BRIDGE="br0"
 TEST_NAME="br_test"
 
-NETWORK_SUBMASK="10.42.0.0/24"
+NETWORK_SUBMASK="fdbe:8cb7:f64c:1::/64"
 CONTROLLER_IP="10.42.0.1"
-BRIDGE_IP="10.42.0.11"
-BR_IP="10.42.0.12/24"
-TEST1_IP="10.42.0.13/24"
-TEST2_IP="10.42.0.14/24"
+BRIDGE_IP="fdbe:8cb7:f64c:1::2"
+BR_IP="dbe:8cb7:f64c:1::2/64"
+TEST1_IP="fdbe:8cb7:f64c:1::3/64"
+TEST2_IP="fdbe:8cb7:f64c:1::4/64"
 
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
@@ -27,7 +27,7 @@ bridge_up() {
         -- set bridge "$BRIDGE" fail_mode=secure \
         -- set-controller "$BRIDGE" tcp:${CONTROLLER_IP}:6653 tcp:${CONTROLLER_IP}:6654
     
-    ip addr add "$BRIDGE_IP"/24 brd + dev "$BRIDGE"
+    ip addr add "$BRIDGE_IP"/64 brd + dev "$BRIDGE"
 }
 
 bridge_down() {
