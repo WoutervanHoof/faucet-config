@@ -36,8 +36,8 @@ bridge_down() {
 }
 
 test_up() {
-    docker run -d --name="$TEST_NAME"1 --net=none nginx:alpine
-    docker run -d --name="$TEST_NAME"2 --net=none nginx:alpine
+    docker run -d --name="$TEST_NAME"1 --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0" nginx:alpine
+    docker run -d --name="$TEST_NAME"2 --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0" nginx:alpine
 
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
@@ -57,7 +57,7 @@ border_router_up() {
 
     docker run -d --name="thread-br" --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=172.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
 
-    ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BR_IP" --gateway="$CONTROLLER_IP"
+    ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BR_IP" --gateway="$BIDGE_IP"
 }
 
 border_router_down() {
