@@ -57,7 +57,7 @@ border_router_up() {
 
     docker run -d --name="thread-br" --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=172.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
 
-    ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BR_IP" --gateway="$BIDGE_IP"
+    ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BR_IP" --gateway="$BRIDGE_IP"
 }
 
 border_router_down() {
