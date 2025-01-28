@@ -27,7 +27,7 @@ bridge_up() {
         -- set bridge "$BRIDGE" fail_mode=secure \
         -- set-controller "$BRIDGE" tcp:${CONTROLLER_IP}:6653 tcp:${CONTROLLER_IP}:6654
     
-    ip addr add "$BRIDGE_IP"/64 brd + dev "$BRIDGE"
+    ip addr add "$BRIDGE_IP"/64 dev "$BRIDGE"
 }
 
 bridge_down() {
