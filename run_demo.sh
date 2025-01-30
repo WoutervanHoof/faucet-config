@@ -14,8 +14,8 @@ TEST_NAME="br_test"
 
 NETWORK_SUBMASK="fdbe:8cb7:f64c:1::/64"
 CONTROLLER_IP="10.42.0.1"
-BRIDGE_IP="fdbe:8cb7:f64c:1::2"
-BORDER_ROUTER_IP="dbe:8cb7:f64c:1::5/64"
+BRIDGE_IP="fdbe:8cb7:f64c:1::1"
+BORDER_ROUTER_IP="fdbe:8cb7:f64c:1::2/64"
 TEST1_IP="fdbe:8cb7:f64c:1::3/64"
 TEST2_IP="fdbe:8cb7:f64c:1::4/64"
 
@@ -36,8 +36,8 @@ bridge_down() {
 }
 
 test_up() {
-    docker run -d --name="$TEST_NAME"1 --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0" nginx:alpine
-    docker run -d --name="$TEST_NAME"2 --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0" nginx:alpine
+    docker run -d --name="$TEST_NAME"1 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" nginx:alpine
+    docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" nginx:alpine
 
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
