@@ -11,21 +11,15 @@ set -euxo pipefail
 
 BRIDGE="br0"
 TEST_NAME="br_test"
-
-NETWORK_SUBMASK="fdbe:8cb7:f64c:1::/64"
 CONTROLLER_IP="10.42.0.1"
-BRIDGE_IP="fdbe:8cb7:f64c:1::1"
-BORDER_ROUTER_IP="fdbe:8cb7:f64c:1::2/64"
-TEST1_IP="fdbe:8cb7:f64c:1::3/64"
-TEST2_IP="fdbe:8cb7:f64c:1::4/64"
 
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
     ovs-vsctl --may-exist add-br "$BRIDGE" \
-        -- set bridge "$BRIDGE" other-config:datapath-id=0000000000000001 \
+        -- set bridge "$BRIDGE" other-config:datapath-id=000000000000000"$NUMBER" \
         -- set bridge "$BRIDGE" other-config:disable-in-band=true \
         -- set bridge "$BRIDGE" fail_mode=secure \
-        -- set-controller "$BRIDGE" tcp:${CONTROLLER_IP}:6653 tcp:${CONTROLLER_IP}:6654
+        -- set-controller "$BRIDGE" "tcp:${CONTROLLER_IP}:6653" "tcp:${CONTROLLER_IP}:6654"
     
     ip addr add "$BRIDGE_IP"/64 dev "$BRIDGE"
 }
@@ -78,7 +72,8 @@ usage() {
 
         Options:
         -h, --help          display this help message.
-        --test              Add two docker containers to the bridge for testing
+        -t, --test          Add two docker containers to the bridge for testing
+        -n, --number        Sets the number used to identify the border router. This sets both the IPv6 network submask as well as the datapath-id for OVS
 EOF
 }
 
@@ -95,39 +90,29 @@ if [ $# -eq 0 ]; then
 fi
 
 TEST=0
-BRIDGE_ONLY=0
+# BRIDGE_ONLY=0
+COMMAND=""
+NUMBER=""
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         up)
-            bridge_up
-
-            if [ "$TEST" -eq "1" ] ; then
-                test_up
-            fi
-
-            border_router_up
-
-            exit 0
+            COMMAND="up"
             ;;
         down)
-            bridge_down
-
-            if docker ps | grep "$TEST_NAME" > /dev/null ; then
-                test_down
-            fi
-
-            border_router_down
-
-            exit 0
+            COMMAND="down"
             ;;
         -t | --test)
             TEST=1
             shift
             ;;
-        -b | --bridge-only)
-            BRIDGE_ONLY=1
-            shift
+        # -b | --bridge-only)
+        #     BRIDGE_ONLY=1
+        #     shift
+        #     ;;
+        -n | --number)
+            NUMBER="$2"
+            shift 2
             ;;
         -h | --help)
             usage
@@ -140,3 +125,27 @@ while [[ "$#" -gt 0 ]]; do
     esac
 done
 
+PREFIX="fdbe:8cb7:f64c:${NUMBER}::"
+# NETWORK_SUBMASK="${PREFIX}/64"
+BRIDGE_IP="${PREFIX}1"
+BORDER_ROUTER_IP="${PREFIX}2/64"
+TEST1_IP="${PREFIX}3/64"
+TEST2_IP="${PREFIX}4/64"
+
+if [[ "$COMMAND" = "up" ]] ; then
+    bridge_up
+
+    if [ "$TEST" -eq "1" ] ; then
+        test_up
+    fi
+
+    border_router_up
+elif [[ "$COMMAND" = "down" ]] ; then
+    bridge_down
+
+    if docker ps | grep "$TEST_NAME" > /dev/null ; then
+        test_down
+    fi
+
+    border_router_down
+fi
