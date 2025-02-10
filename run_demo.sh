@@ -84,7 +84,7 @@ if (ip netns) > /dev/null 2>&1; then :; else
     exit 1
 fi
 
-if [ $# -eq 0 ]; then
+if [[ $# -eq 0 ]]; then
     usage
     exit 0
 fi
@@ -135,14 +135,14 @@ TEST1_IP="${PREFIX}3/64"
 TEST2_IP="${PREFIX}4/64"
 
 if [[ "$COMMAND" = "up" ]] ; then
-    if [[ "$NUMBER" < "1" ]] ; then
+    if [[ "$NUMBER" -lt "1" ]] ; then
         echo >&2 "Please provide a valid number with -n or --number"
         exit 1
     fi
 
     bridge_up
 
-    if [ "$TEST" -eq "1" ] ; then
+    if [[ "$TEST" -eq "1" ]] ; then
         test_up
     fi
 
