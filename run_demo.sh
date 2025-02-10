@@ -133,6 +133,11 @@ TEST1_IP="${PREFIX}3/64"
 TEST2_IP="${PREFIX}4/64"
 
 if [[ "$COMMAND" = "up" ]] ; then
+    if [[ "$NUMBER" < "1" ]] ; then
+        echo >&2 "Please provide a valid number with -n or --number"
+        exit 1
+    fi
+
     bridge_up
 
     if [ "$TEST" -eq "1" ] ; then
