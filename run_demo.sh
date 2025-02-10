@@ -12,10 +12,10 @@ set -euxo pipefail
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
     ovs-vsctl --may-exist add-br "$BRIDGE" \
-        -- set bridge "$BRIDGE" other-config:datapath-id=000000000000000"$NUMBER" \
-        -- set bridge "$BRIDGE" other-config:disable-in-band=true \
-        -- set bridge "$BRIDGE" fail_mode=secure \
-        -- set-controller "$BRIDGE" "tcp:${CONTROLLER_IP}:6653" "tcp:${CONTROLLER_IP}:6654"
+        # -- set bridge "$BRIDGE" other-config:datapath-id=000000000000000"$NUMBER" \
+        # -- set bridge "$BRIDGE" other-config:disable-in-band=true \
+        # -- set bridge "$BRIDGE" fail_mode=secure \
+        # -- set-controller "$BRIDGE" "tcp:${CONTROLLER_IP}:6653" "tcp:${CONTROLLER_IP}:6654"
     
     ip addr add "$BRIDGE_IP"/64 dev "$BRIDGE"
 }
@@ -133,12 +133,12 @@ BORDER_ROUTER_IP="${PREFIX}2/64"
 TEST1_IP="${PREFIX}3/64"
 TEST2_IP="${PREFIX}4/64"
 
-if [[ "$COMMAND" = "up" ]] ; then
-    if [[ "$NUMBER" -lt "1" ]] ; then
-        echo >&2 "Please provide a valid number with -n or --number"
-        exit 1
-    fi
+if [[ "$NUMBER" -lt "1" ]] ; then
+    echo >&2 "Please provide a valid number with -n or --number"
+    exit 1
+fi
 
+if [[ "$COMMAND" = "up" ]] ; then
     bridge_up
 
     if [[ "$TEST" -eq "1" ]] ; then
