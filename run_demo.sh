@@ -9,10 +9,6 @@
 
 set -euxo pipefail
 
-BRIDGE="br0"
-TEST_NAME="br_test"
-CONTROLLER_IP="10.42.0.1"
-
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
     ovs-vsctl --may-exist add-br "$BRIDGE" \
@@ -127,8 +123,11 @@ while [[ "$#" -gt 0 ]]; do
     esac
 done
 
+TEST_NAME="br_test"
+CONTROLLER_IP="10.42.0.1"
+
+BRIDGE="br${NUMBER}"
 PREFIX="fdbe:8cb7:f64c:${NUMBER}::"
-# NETWORK_SUBMASK="${PREFIX}/64"
 BRIDGE_IP="${PREFIX}1"
 BORDER_ROUTER_IP="${PREFIX}2/64"
 TEST1_IP="${PREFIX}3/64"
