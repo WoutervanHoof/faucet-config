@@ -98,9 +98,11 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         up)
             COMMAND="up"
+            shift
             ;;
         down)
             COMMAND="down"
+            shift
             ;;
         -t | --test)
             TEST=1
