@@ -26,8 +26,8 @@ bridge_down() {
 }
 
 test_up() {
-    docker run -d --name="$TEST_NAME"1 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" nginx:alpine
-    docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" nginx:alpine
+    docker run -d --name="$TEST_NAME"1 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --volume "$dumps_dir":"$dumps_dir" nginx:alpine
+    docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --volume "$dumps_dir":"$dumps_dir" nginx:alpine
 
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
@@ -45,7 +45,7 @@ test_down(){
 border_router_up() {
     modprobe ip6table_filter
 
-    docker run -d --name="thread-br" --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=172.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
+    docker run -d --name="thread-br" --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=172.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --volume "$dumps_dir":"$dumps_dir" --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
 
     ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BORDER_ROUTER_IP" --gateway="$BRIDGE_IP"
 }
@@ -137,6 +137,12 @@ TEST2_IP="${PREFIX}4/64"
 if [[ "$NUMBER" -lt "1" ]] ; then
     echo >&2 "Please provide a valid number with -n or --number"
     exit 1
+fi
+
+dumps_dir="/usr/share/dumps"
+
+if [[ ! -d "$dumps_dir"]] ; then
+    mkdir -p "$dumps_dir"
 fi
 
 if [[ "$DOWN" = "1" ]] ; then 
