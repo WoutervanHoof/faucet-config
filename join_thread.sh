@@ -22,4 +22,16 @@ BR_IPV6="fdbe:8cb7:f64c:${NUMBER}::2"
 passphrase="mystify-vantage-deduct"
 NET_KEY="00112233445566778899aabbccddeeff"
 
-docker exec "$container_name" curl -s -H "Content-Type: application/json" --request GET "http://[${BR_IPV6}]:80/available_network"
+if docker exec "$container_name" curl -s -H "Content-Type: application/json" --request GET "http://[${BR_IPV6}]:80/available_network" | grep -q "\"error\":0" ; then 
+    docker exec "$container_name" curl -s -H "Content-Type: application/json" --request POST --data '{
+        "credentialType":"networkKeyType",
+        "networkKey":"00112233445566778899aabbccddeeff",
+        "prefix":"fd11:22::",
+        "defaultRoute":false,
+        "index":0
+    }' \
+     "http://[${BR_IPV6}]:80/join_network"
+else
+    echo "Failed to get available networks"
+    exit 1
+fi

@@ -13,6 +13,6 @@ sudo service otbr-agent stop
 #	exit 1
 #fi
 
-docker container prune
+docker container prune -f
 
 docker-compose up
