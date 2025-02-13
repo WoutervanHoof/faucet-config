@@ -12,10 +12,10 @@ set -euxo pipefail
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
     ovs-vsctl --may-exist add-br "$BRIDGE" \
-        # -- set bridge "$BRIDGE" other-config:datapath-id=000000000000000"$NUMBER" \
-        # -- set bridge "$BRIDGE" other-config:disable-in-band=true \
-        # -- set bridge "$BRIDGE" fail_mode=secure \
-        # -- set-controller "$BRIDGE" "tcp:${CONTROLLER_IP}:6653" "tcp:${CONTROLLER_IP}:6654"
+        -- set bridge "$BRIDGE" other-config:datapath-id=000000000000000"$NUMBER" \
+        -- set bridge "$BRIDGE" other-config:disable-in-band=true \
+        -- set bridge "$BRIDGE" fail_mode=secure \
+        -- set-controller "$BRIDGE" "tcp:${CONTROLLER_IP}:6653" "tcp:${CONTROLLER_IP}:6654"
     
     ip addr add "$BRIDGE_IP"/64 dev "$BRIDGE"
 }
@@ -86,28 +86,29 @@ if [[ $# -eq 0 ]]; then
 fi
 
 TEST=0
-# BRIDGE_ONLY=0
-COMMAND=""
+UP=""
+DOWN=""
 NUMBER=""
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         up)
-            COMMAND="up"
+            UP="1"
             shift
             ;;
         down)
-            COMMAND="down"
+            DOWN="1"
             shift
             ;;
         -t | --test)
             TEST=1
             shift
             ;;
-        # -b | --bridge-only)
-        #     BRIDGE_ONLY=1
-        #     shift
-        #     ;;
+        -c | --clean)
+            docker container prune -f
+            DOWN="1"
+            shift
+            ;;
         -n | --number)
             NUMBER="$2"
             shift 2
@@ -138,15 +139,7 @@ if [[ "$NUMBER" -lt "1" ]] ; then
     exit 1
 fi
 
-if [[ "$COMMAND" = "up" ]] ; then
-    bridge_up
-
-    if [[ "$TEST" -eq "1" ]] ; then
-        test_up
-    fi
-
-    border_router_up
-elif [[ "$COMMAND" = "down" ]] ; then
+if [[ "$DOWN" = "1" ]] ; then 
     bridge_down
 
     if docker ps | grep "$TEST_NAME" > /dev/null ; then
@@ -154,4 +147,14 @@ elif [[ "$COMMAND" = "down" ]] ; then
     fi
 
     border_router_down
+fi
+
+if [[ "$UP" = "1" ]] ; then
+    bridge_up
+
+    if [[ "$TEST" -eq "1" ]] ; then
+        test_up
+    fi
+
+    border_router_up
 fi
