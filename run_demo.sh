@@ -141,7 +141,7 @@ fi
 
 dumps_dir="/usr/share/dumps"
 
-if [[ ! -d "$dumps_dir"]] ; then
+if [[ ! -d "$dumps_dir" ]] ; then
     mkdir -p "$dumps_dir"
 fi
 
