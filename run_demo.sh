@@ -135,7 +135,7 @@ CONTROLLER_IP="10.42.0.1"
 BRIDGE="br${NUMBER}"
 
 if [[ "$IPversion" = "4" ]] ; then
-    PREFIX="10.43."{NUMBER}"
+    PREFIX="10.43.${NUMBER}"
     BRIDGE_IP="${PREFIX}.1"
     BRIDGE_ADDRESS="${BRIDGE_IP}/24"
     BORDER_ROUTER_IP="${PREFIX}.2/24"
