@@ -36,14 +36,14 @@ NET_KEY="00112233445566778899aabbccddeeff"
 
 ORM_PREFIX="fd71:666b:b2e1:bfd9::"
 BR_IP="fdbe:8cb7:f64c:${NUMBER}::2"
-url="http://[${BR_IP}]:80/form_network"
+url="http://[${BR_IP}]:80"
 
 if [[ "$IPversion" = "4" ]] ; then
     BR_IP="10.43.${NUMBER}.2"
-    url="http://${BR_IP}:80/form_network"
+    url="http://${BR_IP}:80"
 fi
 
-while ! docker exec "$container_name" curl -sf "http://[${BR_IP}]:80" > /dev/null ; do
+while ! docker exec "$container_name" curl -sf "$url" > /dev/null ; do
     sleep 5
 	echo "sleeping then trying again"
 done
@@ -57,6 +57,6 @@ docker exec "$container_name" curl -s -H "Content-Type: application/json" --requ
     "passphrase":"'"${passphrase}"'",
     "channel":15,
     "networkName":"OpenThreadDemo"}' \
-    "$url"
+    "${url}/form_network"
 
 docker exec "$container_name" ip route -6 add "${ORM_PREFIX}"/64 via "$BR_IP"
