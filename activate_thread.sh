@@ -2,20 +2,35 @@
 
 set -exo pipefail
 
-if [[ -z "$1" ]] ; then 
-    echo "Please provide the container name"
-    exit 1
-fi
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -n | --number)
+            NUMBER="$2"
+            shift 2
+            ;;
+        # -h | --help)
+        #     usage
+        #     exit 0
+        #     ;;
+        -4 | --ipv4)
+            IPversion="4"
+            shift
+            ;;
+        *)
+            # Little ugly, but just catch unkown last argument as name            
+            container_name="$1"
+            shift
+            ;;
+    esac
+done
 
-if [[ -z "$2" ]] ; then 
-    echo "Please provide the border router number"
+if [[ "$NUMBER" -lt "1" ]] ; then
+    echo >&2 "Please provide a valid number with -n or --number"
     exit 1
 fi
 
 set -u
 
-container_name="$1"
-NUMBER="$2"
 passphrase="mystify-vantage-deduct"
 NET_KEY="00112233445566778899aabbccddeeff"
 
