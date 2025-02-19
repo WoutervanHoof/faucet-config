@@ -35,8 +35,9 @@ passphrase="mystify-vantage-deduct"
 NET_KEY="00112233445566778899aabbccddeeff"
 
 ORM_PREFIX="fd71:666b:b2e1:bfd9::"
-BR_IP="fdbe:8cb7:f64c:${NUMBER}::2"
+BR_IP="fdbe:8cb7:f64c:abc${NUMBER}::2"
 url="http://[${BR_IP}]:80"
+EXTPAN="be8cb7f64cabc1"
 
 if [[ "$IPversion" = "4" ]] ; then
     BR_IP="10.43.${NUMBER}.2"
@@ -52,7 +53,7 @@ docker exec "$container_name" curl -s -H "Content-Type: application/json" --requ
     "networkKey":"'"${NET_KEY}"'",	
     "prefix":"'"${ORM_PREFIX}"'",
     "defaultRoute":true,
-    "extPanId":"1111111122222222",
+    "extPanId":"'"${EXTPAN}"'",
     "panId":"0x1234",
     "passphrase":"'"${passphrase}"'",
     "channel":15,
