@@ -39,7 +39,7 @@ BR_IP="fdbe:8cb7:f64c:${NUMBER}::2"
 url="http://[${BR_IP}]:80/form_network"
 
 if [[ "$IPversion" = "4" ]] ; then
-    BR_IP="10.43.0.2"
+    BR_IP="10.43.${NUMBER}.2"
     url="http://${BR_IP}:80/form_network"
 fi
 
