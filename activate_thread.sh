@@ -64,3 +64,5 @@ docker exec "$container_name" curl -s -H "Content-Type: application/json" --requ
 
 docker exec "$container_name" ip -6 route add "${ORM_PREFIX}"/64 via "$BR_IP"
 docker exec thread-br ot-ctl netdata publish route "fdbe:8cb7:f64c:abc${NUMBER}::/64" s high
+docker exec thread-br ip route add fdbe:ef11:11ca:2222::/64 dev eth0
+docker exec thread-br ot-ctl netdata publish fdbe:ef11:11ca:2222::/64 s high
