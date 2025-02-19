@@ -59,4 +59,4 @@ else
     exit 1
 fi
 
-docker exec thread_br ot-ctl netdata publish route fdbe:8cb7:f64c:abc${NUMBER}:: s high
+docker exec thread-br ot-ctl netdata publish route "fdbe:8cb7:f64c:abc${NUMBER}::/64" s high

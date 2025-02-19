@@ -19,7 +19,7 @@ while [[ "$#" -gt 0 ]]; do
             shift
             ;;
         *)
-            # Little ugly, but just catch unkown last argument as name            
+            # Little ugly, but just catch unkown last argument as name
             container_name="$1"
             shift
             ;;
@@ -39,7 +39,7 @@ NET_KEY="00112233445566778899aabbccddeeff"
 ORM_PREFIX="fd71:666b:b2e1:bfd9::"
 BR_IP="fdbe:8cb7:f64c:abc${NUMBER}::2"
 url="http://[${BR_IP}]:80"
-EXTPAN=""
+EXTPAN="BEEF1111CAFE2222"
 
 if [[ "$IPversion" = "4" ]] ; then
     BR_IP="10.43.${NUMBER}.2"
@@ -52,7 +52,7 @@ while ! docker exec "$container_name" curl -sf "$url" > /dev/null ; do
 done
 
 docker exec "$container_name" curl -s -H "Content-Type: application/json" --request POST --data '{
-    "networkKey":"'"${NET_KEY}"'",	
+    "networkKey":"'"${NET_KEY}"'",
     "prefix":"'"${ORM_PREFIX}"'",
     "defaultRoute":true,
     "extPanId":"'"${EXTPAN}"'",
@@ -62,5 +62,5 @@ docker exec "$container_name" curl -s -H "Content-Type: application/json" --requ
     "networkName":"OpenThreadDemo"}' \
     "${url}/form_network"
 
-docker exec "$container_name" ip route -6 add "${ORM_PREFIX}"/64 via "$BR_IP"
-docker exec thread_br ot-ctl netdata publish route fdbe:8cb7:f64c:abc${NUMBER}:: s high
+docker exec "$container_name" ip -6 route add "${ORM_PREFIX}"/64 via "$BR_IP"
+docker exec thread-br ot-ctl netdata publish route "fdbe:8cb7:f64c:abc${NUMBER}::/64" s high
