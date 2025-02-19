@@ -50,7 +50,7 @@ if docker exec "$container_name" curl -s -H "Content-Type: application/json" --r
     docker exec "$container_name" curl -s -H "Content-Type: application/json" --request POST --data '{
         "credentialType":"networkKeyType",
         "networkKey":"00112233445566778899aabbccddeeff",
-        "prefix":"fd11:22:1:1",
+        "prefix":"fd11:22:1:1::",
         "defaultRoute":false,
         "index":0
     }' \
