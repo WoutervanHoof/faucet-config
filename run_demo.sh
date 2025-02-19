@@ -26,8 +26,8 @@ bridge_down() {
 }
 
 test_up() {
-    docker run -d --name="$TEST_NAME"1 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --volume "$dumps_dir":"$dumps_dir" nginx:alpine
-    docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --volume "$dumps_dir":"$dumps_dir" nginx:alpine
+    docker run -d --name="$TEST_NAME"1 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --volume "$dumps_dir":"$dumps_dir" nikolaka/netshoot
+    docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --volume "$dumps_dir":"$dumps_dir" nikolaka/netshoot
 
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
@@ -142,7 +142,7 @@ if [[ "$IPversion" = "4" ]] ; then
     TEST1_IP="${PREFIX}.3/24"
     TEST2_IP="${PREFIX}.4/24"
 else
-    PREFIX="fdbe:8cb7:f64c:${NUMBER}::"
+    PREFIX="fdbe:8cb7:f64c:abc${NUMBER}::"
     BRIDGE_IP="${PREFIX}1"
     BRIDGE_ADDRESS="${BRIDGE_IP}/64"
     BORDER_ROUTER_IP="${PREFIX}2/64"

@@ -35,7 +35,7 @@ passphrase="mystify-vantage-deduct"
 NET_KEY="00112233445566778899aabbccddeeff"
 
 ORM_PREFIX="fd71:666b:b2e1:bfd9::"
-BR_IP="fdbe:8cb7:f64c:${NUMBER}::2"
+BR_IP="fdbe:8cb7:f64c:abc${NUMBER}::2"
 url="http://[${BR_IP}]:80"
 
 if [[ "$IPversion" = "4" ]] ; then
@@ -58,3 +58,5 @@ else
     echo "Failed to get available networks"
     exit 1
 fi
+
+docker exec thread_br ot-ctl netdata publish route fdbe:8cb7:f64c:abc${NUMBER}:: s high
