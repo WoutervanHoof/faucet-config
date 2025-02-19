@@ -17,7 +17,7 @@ bridge_up() {
         -- set bridge "$BRIDGE" fail_mode=secure \
         -- set-controller "$BRIDGE" "tcp:${CONTROLLER_IP}:6653" "tcp:${CONTROLLER_IP}:6654"
     
-    ip addr add "$BRIDGE_IP"/64 dev "$BRIDGE"
+    ip addr add "$BRIDGE_ADDRESS" dev "$BRIDGE"
 }
 
 bridge_down() {
@@ -89,6 +89,7 @@ TEST=0
 UP=""
 DOWN=""
 NUMBER=""
+IPversion="6"
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -117,6 +118,10 @@ while [[ "$#" -gt 0 ]]; do
             usage
             exit 0
             ;;
+        -4 | --ipv4)
+            IPversion="4"
+            shift
+            ;;
         *)
             echo >&2 "$UTIL: unknown command \"$1\" (use -h, --help for help)"
             exit 1
@@ -128,11 +133,22 @@ TEST_NAME="br_test"
 CONTROLLER_IP="10.42.0.1"
 
 BRIDGE="br${NUMBER}"
-PREFIX="fdbe:8cb7:f64c:${NUMBER}::"
-BRIDGE_IP="${PREFIX}1"
-BORDER_ROUTER_IP="${PREFIX}2/64"
-TEST1_IP="${PREFIX}3/64"
-TEST2_IP="${PREFIX}4/64"
+
+if [[ "$IPversion" = "4" ]] ; then
+    PREFIX="10.43.0"
+    BRIDGE_IP="${PREFIX}.1"
+    BRIDGE_ADDRESS="${BRIDGE_IP}/24"
+    BORDER_ROUTER_IP="${PREFIX}.2/24"
+    TEST1_IP="${PREFIX}.3/24"
+    TEST2_IP="${PREFIX}.4/24"
+else
+    PREFIX="fdbe:8cb7:f64c:${NUMBER}::"
+    BRIDGE_IP="${PREFIX}1"
+    BRIDGE_ADDRESS="${BRIDGE_IP}/64"
+    BORDER_ROUTER_IP="${PREFIX}2/64"
+    TEST1_IP="${PREFIX}3/64"
+    TEST2_IP="${PREFIX}4/64"
+fi
 
 if [[ "$NUMBER" -lt "1" ]] ; then
     echo >&2 "Please provide a valid number with -n or --number"
