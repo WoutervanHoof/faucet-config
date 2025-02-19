@@ -2,6 +2,7 @@
 
 set -exo pipefail
 
+IPversion="6"
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -n | --number)
