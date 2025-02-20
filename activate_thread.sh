@@ -70,6 +70,8 @@ while ! docker exec "$container_name" curl -sf "$url" > /dev/null ; do
 	echo "sleeping then trying again"
 done
 
+docker exec thread-br ot-ctl raoptions clear
+
 docker exec "$container_name" curl -s -H "Content-Type: application/json" --request POST --data '{
     "networkKey":"'"${NET_KEY}"'",
     "prefix":"'"${ORM_PREFIX}"'",
