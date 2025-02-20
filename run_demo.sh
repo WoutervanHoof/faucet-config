@@ -162,13 +162,13 @@ if [[ ! -d "$dumps_dir" ]] ; then
 fi
 
 if [[ "$DOWN" = "1" ]] ; then 
-    bridge_down
-
     if docker ps | grep "$TEST_NAME" > /dev/null ; then
         test_down
     fi
 
     border_router_down
+
+    bridge_down
 fi
 
 if [[ "$UP" = "1" ]] ; then
