@@ -35,7 +35,7 @@ set -u
 passphrase="mystify-vantage-deduct"
 NET_KEY="00112233445566778899aabbccddeeff"
 
-ORM_PREFIX="fd71:666b:b2e1:bfd9::"
+ORM_PREFIX="fd11:22:1:1::"
 BR_IP="fdbe:8cb7:f64c:abc${NUMBER}::2"
 url="http://[${BR_IP}]:80"
 
@@ -50,7 +50,7 @@ if docker exec "$container_name" curl -s -H "Content-Type: application/json" --r
     docker exec "$container_name" curl -s -H "Content-Type: application/json" --request POST --data '{
         "credentialType":"networkKeyType",
         "networkKey":"00112233445566778899aabbccddeeff",
-        "prefix":"fd11:22:1:1::",
+        "prefix":"'"${ORM_PREFIX}"'",
         "defaultRoute":false,
         "index":0
     }' \
@@ -60,4 +60,7 @@ else
     exit 1
 fi
 
+docker exec "$container_name" ip -6 route add "${ORM_PREFIX}"/64 via "$BR_IP"
 docker exec thread-br ot-ctl netdata publish route "fdbe:8cb7:f64c:abc${NUMBER}::/64" s high
+# docker exec thread-br ip route add fdbe:ef11:11ca:2222::/64 dev eth0
+# docker exec thread-br ot-ctl netdata publish fdbe:ef11:11ca:2222::/64 s high
