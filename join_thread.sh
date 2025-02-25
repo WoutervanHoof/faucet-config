@@ -5,6 +5,8 @@ set -exo pipefail
 . ./network_layout.sh
 
 IPversion="6"
+container_name="br_test1"
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -n | --number)
