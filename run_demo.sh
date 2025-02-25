@@ -9,6 +9,8 @@
 
 set -euxo pipefail
 
+. ./network_layout.sh
+
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
     ovs-vsctl --may-exist add-br "$BRIDGE" \
@@ -29,7 +31,7 @@ test_up() {
     # We disable accept_ra and autoconf to block the borderrouters from spreading ips.
     # Those IPs mess up the preconfigured routes
     docker run -d --name="$TEST_NAME"1 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --sysctl "net.ipv6.conf.all.autoconf=0 net.ipv6.conf.all.accept_ra=0" --sysctl "net.ipv6.conf.default.autoconf=0" --sysctl "net.ipv6.conf.default.accept_ra=0" --volume "$dumps_dir":"$dumps_dir" nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
-    docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --sysctl "net.ipv6.conf.all.autoconf=0 net.ipv6.conf.all.accept_ra=0" --sysctl "net.ipv6.conf.default.autoconf=0" --sysctl "net.ipv6.conf.default.accept_ra=0" --volume "$dumps_dir":"$dumps_dir" nginx:alpine
+    docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --volume "$dumps_dir":"$dumps_dir" nginx:alpine
 
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
     ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
@@ -145,21 +147,7 @@ done
 TEST_NAME="br_test"
 CONTROLLER_IP="10.42.0.1"
 
-if [[ "$IPversion" = "4" ]] ; then
-    PREFIX="10.43.${NUMBER}"
-    BRIDGE_IP="${PREFIX}.1"
-    BRIDGE_ADDRESS="${BRIDGE_IP}/24"
-    BORDER_ROUTER_IP="${PREFIX}.2/24"
-    TEST1_IP="${PREFIX}.3/24"
-    TEST2_IP="${PREFIX}.4/24"
-else
-    PREFIX="fd99:aaaa:bbbb:${NUMBER}00::"
-    BRIDGE_IP="${PREFIX}1"
-    BRIDGE_ADDRESS="${BRIDGE_IP}/64"
-    BORDER_ROUTER_IP="${PREFIX}2/64"
-    TEST1_IP="${PREFIX}3/64"
-    TEST2_IP="${PREFIX}4/64"
-fi
+get_network_variables
 
 if [[ "$NUMBER" -lt "1" ]] ; then
     echo >&2 "Please provide a valid number with -n or --number"

@@ -5,6 +5,7 @@ get_network_variables() {
 
     if [[ "$IPversion" = "4" ]] ; then
         PREFIX="10.43.${NUMBER}"
+        PREFIX_ROUTE="${PREFIX}.0/24"
         BRIDGE_IP="${PREFIX}.1"
         BRIDGE_ADDRESS="${BRIDGE_IP}/24"
         BORDER_ROUTER_IP="${PREFIX}.2/24"
@@ -12,6 +13,7 @@ get_network_variables() {
         TEST2_IP="${PREFIX}.4/24"
     else
         PREFIX="fd99:aaaa:bbbb:${NUMBER}00::"
+        PREFIX_ROUTE="${PREFIX}/64"
         BRIDGE_IP="${PREFIX}1"
         BRIDGE_ADDRESS="${BRIDGE_IP}/64"
         BORDER_ROUTER_IP="${PREFIX}2/64"
