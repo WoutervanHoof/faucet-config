@@ -26,6 +26,8 @@ bridge_down() {
 }
 
 test_up() {
+    # We disable accept_ra and autoconf to block the borderrouters from spreading ips.
+    # Those IPs mess up the preconfigured routes
     docker run -d --name="$TEST_NAME"1 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --sysctl "net.ipv6.conf.all.autoconf=0 net.ipv6.conf.all.accept_ra=0" --sysctl "net.ipv6.conf.default.autoconf=0" --sysctl "net.ipv6.conf.default.accept_ra=0" --volume "$dumps_dir":"$dumps_dir" nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
     docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --sysctl "net.ipv6.conf.all.autoconf=0 net.ipv6.conf.all.accept_ra=0" --sysctl "net.ipv6.conf.default.autoconf=0" --sysctl "net.ipv6.conf.default.accept_ra=0" --volume "$dumps_dir":"$dumps_dir" nginx:alpine
 
@@ -90,6 +92,7 @@ UP=""
 DOWN=""
 NUMBER=""
 IPversion="6"
+BRIDGE=""
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -122,6 +125,15 @@ while [[ "$#" -gt 0 ]]; do
             IPversion="4"
             shift
             ;;
+        -b | --bridge)
+            BRIDGE="$2"
+            shift 2
+
+            if ! sudo ovs-vsctl br-exists "$BRIDGE" ; then
+                echo "Please provide a valid bridge name after -b or --bridge"
+                exit 1
+            fi
+            ;;
         *)
             echo >&2 "$UTIL: unknown command \"$1\" (use -h, --help for help)"
             exit 1
@@ -132,8 +144,6 @@ done
 TEST_NAME="br_test"
 CONTROLLER_IP="10.42.0.1"
 
-BRIDGE="br${NUMBER}"
-
 if [[ "$IPversion" = "4" ]] ; then
     PREFIX="10.43.${NUMBER}"
     BRIDGE_IP="${PREFIX}.1"
@@ -142,7 +152,7 @@ if [[ "$IPversion" = "4" ]] ; then
     TEST1_IP="${PREFIX}.3/24"
     TEST2_IP="${PREFIX}.4/24"
 else
-    PREFIX="fdbe:8cb7:f64c:abc${NUMBER}::"
+    PREFIX="fd99:aaaa:bbbb:${NUMBER}00::"
     BRIDGE_IP="${PREFIX}1"
     BRIDGE_ADDRESS="${BRIDGE_IP}/64"
     BORDER_ROUTER_IP="${PREFIX}2/64"
@@ -168,11 +178,20 @@ if [[ "$DOWN" = "1" ]] ; then
 
     border_router_down
 
-    bridge_down
+    if [[ "$BRIDGE" = "" ]] ; then
+        # Since no bridge name is set, assume default and delete, else do not delete
+        BRIDGE="BR${NUMBER}"
+        bridge_down
+        BRIDGE=""
+    fi
 fi
 
 if [[ "$UP" = "1" ]] ; then
-    bridge_up
+
+    if [[ "$BRIDGE" = ""  ]] ; then
+        BRIDGE="br${NUMBER}"
+        bridge_up
+    fi
 
     if [[ "$TEST" -eq "1" ]] ; then
         test_up

@@ -1,0 +1,53 @@
+vlans:
+    border_router_1:
+        vid: 100
+        description: "First border router VLAN (has an attacker)"
+        # TODO: see if this needs a different value
+        faucet_mac: "0e:00:00:00:10:01"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:1001/64'
+            - 'fd99:aaaa:bbbb:100::1/64'
+            - '10.0.100.254/24'
+    border_router_2:
+        vid: 200
+        description: "Second border router VLAN (has an attacker)"
+        # TODO: see if this needs a different value
+        faucet_mac: "0e:00:00:00:20:01"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:2001/64'
+            - 'fd99:aaaa:bbbb:200::1/64'
+            - '10.0.200.254/24'
+
+dps:
+    sw1:
+        dp_id: 0x1
+        hardware: "Open vSwitch"
+        interfaces:
+            1:
+                name: "Thread border agent 1"
+                description: "thread interface"
+                native_vlan: border_router_1
+            2:
+                name: "Attacker 2"
+                description: "Attacker machine"
+                native_vlan: border_router_1
+            3:
+                name: "Test"
+                description: "Test interface to ping from"
+                native_vlan: border_router_1
+    sw2:
+        dp_id: 0x2
+        hardware: "Open vSwitch"
+        interfaces:
+            1:
+                name: "Thread border agent 2"
+                description: "thread interface"
+                native_vlan: border_router_2
+            2:
+                name: "Attacker 2"
+                description: "Attacker machine 2"
+                native_vlan: border_router_2
+            3:
+                name: "Test 2"
+                description: "Test interface to duplicate 2"
+                native_vlan: border_router_2

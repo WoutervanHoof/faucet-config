@@ -1,0 +1,5 @@
+volumes/opt/grafana/
+volumes/opt/prometheus/
+volumes/var/log/faucet/
+
+dumps
