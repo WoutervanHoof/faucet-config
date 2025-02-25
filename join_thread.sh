@@ -39,8 +39,6 @@ set -u
 passphrase="mystify-vantage-deduct"
 NET_KEY="00112233445566778899aabbccddeeff"
 
-ORM_PREFIX="fd11:22:1:1::"
-
 get_network_variables
 
 url="http://[${BORDER_ROUTER_IP}]:80"
@@ -56,7 +54,7 @@ if docker exec "$container_name" curl -s -H "Content-Type: application/json" --r
     docker exec "$container_name" curl -s -H "Content-Type: application/json" --request POST --data '{
         "credentialType":"networkKeyType",
         "networkKey":"'"${NET_KEY}"'",
-        "prefix":"'"${ORM_PREFIX}"'",
+        "prefix":"'"${ORM_PREFIX2}"'",
         "defaultRoute":false,
         "index":0
     }' \

@@ -2,6 +2,7 @@
 
 get_network_variables() {
     ORM_PREFIX="fd71:666b:b2e1:bfd9::"
+    ORM_PREFIX2="fd11:22:1:1::"
 
     if [[ "$IPversion" = "4" ]] ; then
         PREFIX="10.43.${NUMBER}"
