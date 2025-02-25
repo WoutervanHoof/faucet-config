@@ -93,6 +93,7 @@ DOWN=""
 NUMBER=""
 IPversion="6"
 BRIDGE=""
+BRIDGE_NAME=""
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -126,10 +127,10 @@ while [[ "$#" -gt 0 ]]; do
             shift
             ;;
         -b | --bridge)
-            BRIDGE="$2"
+            BRIDGE_NAME="$2"
             shift 2
 
-            if ! sudo ovs-vsctl br-exists "$BRIDGE" ; then
+            if ! sudo ovs-vsctl br-exists "$BRIDGE_NAME" ; then
                 echo "Please provide a valid bridge name after -b or --bridge"
                 exit 1
             fi
@@ -165,6 +166,8 @@ if [[ "$NUMBER" -lt "1" ]] ; then
     exit 1
 fi
 
+BRIDGE="br${NUMBER}"
+
 dumps_dir="/usr/share/dumps"
 
 if [[ ! -d "$dumps_dir" ]] ; then
@@ -172,25 +175,27 @@ if [[ ! -d "$dumps_dir" ]] ; then
 fi
 
 if [[ "$DOWN" = "1" ]] ; then 
+    if [[ "$BRIDGE_NAME" != "" ]] ; then
+        echo "down or -c cannot be used together with non default bridge name"
+        exit 1
+    fi
+
     if docker ps | grep "$TEST_NAME" > /dev/null ; then
         test_down
     fi
 
     border_router_down
-
-    if [[ "$BRIDGE" = "" ]] ; then
-        # Since no bridge name is set, assume default and delete, else do not delete
-        BRIDGE="BR${NUMBER}"
-        bridge_down
-        BRIDGE=""
-    fi
+    
+    # Since no bridge name is set, assume default and delete
+    bridge_down
 fi
 
 if [[ "$UP" = "1" ]] ; then
 
-    if [[ "$BRIDGE" = ""  ]] ; then
-        BRIDGE="br${NUMBER}"
+    if [[ "$BRIDGE_NAME" = ""  ]] ; then
         bridge_up
+    else
+        BRIDGE="$BRIDGE_NAME"
     fi
 
     if [[ "$TEST" -eq "1" ]] ; then
