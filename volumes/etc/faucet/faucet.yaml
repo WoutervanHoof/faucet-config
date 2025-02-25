@@ -8,6 +8,10 @@ vlans:
             - 'fe80::c00:00ff:fe00:1001/64'
             - 'fd99:aaaa:bbbb:100::1/64'
             - '10.0.100.254/24'
+        routes:
+            - route:
+                ip_dst: 'fd71:666b:b2e1:bfd9::/64'
+                ip_gw:  'fd99:aaaa:bbbb:100::2'
     border_router_2:
         vid: 200
         description: "Second border router VLAN (has an attacker)"
@@ -17,6 +21,10 @@ vlans:
             - 'fe80::c00:00ff:fe00:2001/64'
             - 'fd99:aaaa:bbbb:200::1/64'
             - '10.0.200.254/24'
+        routes:
+            - route:
+                ip_dst: 'fd71:666b:b2e1:bfd9::/64'
+                ip_gw:  'fd99:aaaa:bbbb:200::2'
 
 dps:
     sw1:
