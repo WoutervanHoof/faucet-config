@@ -56,7 +56,7 @@ passphrase="mystify-vantage-deduct"
 NET_KEY="00112233445566778899aabbccddeeff"
 
 ORM_PREFIX="fd71:666b:b2e1:bfd9::"
-BR_IP="fdbe:8cb7:f64c:abc${NUMBER}::2"
+BR_IP="fd99:aaaa:bbbb:${NUMBER}00::2"
 url="http://[${BR_IP}]:80"
 EXTPAN="BEEF1111CAFE2222"
 
@@ -83,8 +83,8 @@ docker exec "$container_name" curl -s -H "Content-Type: application/json" --requ
     "networkName":"OpenThreadDemo"}' \
     "${url}/form_network"
 
-docker exec "$container_name" ip -6 route add "${ORM_PREFIX}"/64 via "$BR_IP"
-docker exec thread-br ot-ctl netdata publish route "fdbe:8cb7:f64c:abc${NUMBER}::/64" s high
+# docker exec "$container_name" ip -6 route add "${ORM_PREFIX}"/64 via "$BR_IP"
+docker exec thread-br ot-ctl netdata publish route "fd99:aaaa:bbbb:${NUMBER}00::/64" s high
 
 # docker exec thread-br ip route add fdbe:ef11:11ca:2222::/64 dev eth0
 # docker exec thread-br ot-ctl netdata publish route fdbe:ef11:11ca:2222::/64 s high
