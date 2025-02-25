@@ -8,7 +8,8 @@ get_network_variables() {
         PREFIX_ROUTE="${PREFIX}.0/24"
         BRIDGE_IP="${PREFIX}.1"
         BRIDGE_ADDRESS="${BRIDGE_IP}/24"
-        BORDER_ROUTER_IP="${PREFIX}.2/24"
+        BORDER_ROUTER_IP="${PREFIX}.2"
+        BORDER_ROUTER_SUBNET="${BORDER_ROUTER_IP}/24"
         TEST1_IP="${PREFIX}.3/24"
         TEST2_IP="${PREFIX}.4/24"
     else
@@ -16,7 +17,8 @@ get_network_variables() {
         PREFIX_ROUTE="${PREFIX}/64"
         BRIDGE_IP="${PREFIX}1"
         BRIDGE_ADDRESS="${BRIDGE_IP}/64"
-        BORDER_ROUTER_IP="${PREFIX}2/64"
+        BORDER_ROUTER_IP="${PREFIX}2"
+        BORDER_ROUTER_SUBNET="${BORDER_ROUTER_IP}/64"
         TEST1_IP="${PREFIX}3/64"
         TEST2_IP="${PREFIX}4/64"
     fi
