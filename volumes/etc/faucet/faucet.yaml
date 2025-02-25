@@ -2,29 +2,36 @@ vlans:
     border_router_1:
         vid: 100
         description: "First border router VLAN (has an attacker)"
-        # TODO: see if this needs a different value
         faucet_mac: "0e:00:00:00:10:01"
         faucet_vips:
             - 'fe80::c00:00ff:fe00:1001/64'
             - 'fd99:aaaa:bbbb:100::1/64'
             - '10.0.100.254/24'
         routes:
-            - route:
+            - route3:
                 ip_dst: 'fd71:666b:b2e1:bfd9::/64'
-                ip_gw:  'fd99:aaaa:bbbb:100::2'
+                ip_gw: 'fd99:aaaa:bbbb:100::2'
+            - route4:
+                ip_dst: 'fd99:aaaa:bbbb:200::/64'
+                ip_gw: 'fd99:aaaa:bbbb:100::2'
     border_router_2:
         vid: 200
         description: "Second border router VLAN (has an attacker)"
-        # TODO: see if this needs a different value
         faucet_mac: "0e:00:00:00:20:01"
         faucet_vips:
             - 'fe80::c00:00ff:fe00:2001/64'
             - 'fd99:aaaa:bbbb:200::1/64'
             - '10.0.200.254/24'
         routes:
-            - route:
+            - route1:
                 ip_dst: 'fd71:666b:b2e1:bfd9::/64'
-                ip_gw:  'fd99:aaaa:bbbb:200::2'
+                ip_gw: 'fd99:aaaa:bbbb:200::2'
+            - route2:
+                ip_dst: 'fd99:aaaa:bbbb:100::/64'
+                ip_gw: 'fd99:aaaa:bbbb:200::2'
+routers:
+    router1:
+        vlans: [border_router_1, border_router_2]
 
 dps:
     sw1:
@@ -32,11 +39,11 @@ dps:
         hardware: "Open vSwitch"
         interfaces:
             1:
-                name: "Thread border agent 1"
+                name: "ThreadBR1"
                 description: "thread interface"
                 native_vlan: border_router_1
             2:
-                name: "Attacker 2"
+                name: "Attacker2"
                 description: "Attacker machine"
                 native_vlan: border_router_1
             3:
@@ -48,14 +55,14 @@ dps:
         hardware: "Open vSwitch"
         interfaces:
             1:
-                name: "Thread border agent 2"
+                name: "ThreadBR2"
                 description: "thread interface"
                 native_vlan: border_router_2
             2:
-                name: "Attacker 2"
+                name: "Attacker2"
                 description: "Attacker machine 2"
                 native_vlan: border_router_2
             3:
-                name: "Test 2"
+                name: "Test2"
                 description: "Test interface to duplicate 2"
                 native_vlan: border_router_2
