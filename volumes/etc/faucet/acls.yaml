@@ -1,0 +1,15 @@
+acls:
+    block-telnet:
+        - rule:
+            dl_type: 0x86dd # IPv6
+            nw_proto: 6     # TCP
+            tcp_dst: 23     # Telnet
+            actions:
+                allow: 0    
+        - rule:
+            actions:
+                allow: 1
+    allow-all:
+        - rule:
+            actions:
+                allow: 1

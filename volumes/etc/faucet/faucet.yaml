@@ -1,3 +1,6 @@
+include:
+    - acls.yaml
+
 vlans:
     border_router_1:
         vid: 100
@@ -27,6 +30,9 @@ vlans:
                 ip_dst: 'fd71:666b:b2e1:bfd9::/64'
                 ip_gw: 'fd99:aaaa:bbbb:200::2'
             - route:
+                ip_dst: 'fd11:22:1:1::/64'
+                ip_gw: 'fd99:aaaa:bbbb:200::2'
+            - route:
                 ip_dst: 'fd99:aaaa:bbbb:100::/64'
                 ip_gw: 'fd99:aaaa:bbbb:200::2'
 routers:
@@ -42,6 +48,7 @@ dps:
                 name: "ThreadBR1"
                 description: "thread interface"
                 native_vlan: border_router_1
+                acls_in: [block-telnet]
             2:
                 name: "Attacker2"
                 description: "Attacker machine"
@@ -58,6 +65,7 @@ dps:
                 name: "ThreadBR2"
                 description: "thread interface"
                 native_vlan: border_router_2
+                acls_in: [block-telnet]
             2:
                 name: "Attacker2"
                 description: "Attacker machine 2"
