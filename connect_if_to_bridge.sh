@@ -21,5 +21,3 @@ sudo ovs-vsctl --may-exist add-port "$bridge_name" wlan0
 
 sudo ip a flush wlan0
 sudo dhclient "$bridge_name"
-
-#sudo ip route append default via 10.42.0.1 dev "$bridge_name"

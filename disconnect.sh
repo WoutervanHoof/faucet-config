@@ -5,8 +5,8 @@ set -euxo pipefail
 bridge_name=$1
 
 if [ -z "${bridge_name+x}" ] ; then
-        echo "usage: connect_if_to_bridge.sh BRIDGE_NAME"
-        exit 1
+    echo "usage: connect_if_to_bridge.sh BRIDGE_NAME"
+    exit 1
 fi
 
 for id in $(ps -A | grep dhclient | grep -o -E '^  ([0-9]*)') ; do
