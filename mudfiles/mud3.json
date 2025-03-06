@@ -1,0 +1,86 @@
+{
+  "ietf-mud:mud": {
+    "mud-version": 1,
+    "mud-url": "https://mud.codeflex.dev/files/demo/mud3.json",
+    "last-update": "2023-03-22T14:58:51+01:00",
+    "cache-validity": 48,
+    "is-supported": true,
+    "systeminfo": "CodeFlex Example MUD",
+    "from-device-policy": {
+      "access-lists": {
+        "access-list": [
+          {
+            "name": "mud-codeflex-dev-acl-fr"
+          }
+        ]
+      }
+    },
+    "to-device-policy": {
+      "access-lists": {
+        "access-list": [
+          {
+            "name": "mud-codeflex-dev-acl-to"
+          }
+        ]
+      }
+    }
+  },
+  "ietf-access-control-list:acls": {
+    "acl": [
+      {
+        "name": "mud-codeflex-dev-acl-to",
+        "type": "ipv6-acl-type",
+        "aces": {
+          "ace": [
+            {
+              "name": "cl0-todev",
+              "matches": {
+                "ipv6": {
+                  "ietf-acldns:src-dnsname": "mud-to.codeflex.dev",
+                  "protocol": 6
+                },
+                "tcp": {
+                  "ietf-mud:direction-initiated": "from-device",
+                  "source-port": {
+                    "operator": "eq",
+                    "port": 443
+                  }
+                }
+              },
+              "actions": {
+                "forwarding": "accept"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "mud-codeflex-dev-acl-fr",
+        "type": "ipv6-acl-type",
+        "aces": {
+          "ace": [
+            {
+              "name": "cl0-frdev",
+              "matches": {
+                "ipv6": {
+                  "ietf-acldns:dst-dnsname": "mud-fr.codeflex.dev",
+                  "protocol": 6
+                },
+                "tcp": {
+                  "ietf-mud:direction-initiated": "from-device",
+                  "destination-port": {
+                    "operator": "eq",
+                    "port": 889
+                  }
+                }
+              },
+              "actions": {
+                "forwarding": "accept"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

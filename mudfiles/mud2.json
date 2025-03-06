@@ -1,0 +1,150 @@
+{
+  "ietf-mud:mud": {
+    "mud-version": 1,
+    "mud-url": "https://mud.codeflex.dev/files/demo/mud.json",
+    "last-update": "2023-03-22T14:58:51+01:00",
+    "mud-signature": "https://mud.codeflex.dev/files/demo/mud.json.p7s",
+    "cache-validity": 48,
+    "is-supported": true,
+    "systeminfo": "CodeFlex Example MUD",
+    "from-device-policy": {
+      "access-lists": {
+        "access-list": [
+          {
+            "name": "mud-codeflex-dev-acl-fr"
+          },
+	  {
+            "name": "mud-codeflex-dev-acl-fr-2"
+          },
+	  {
+            "name": "mud-codeflex-dev-acl-fr-3"
+          }
+        ]
+      }
+    },
+    "to-device-policy": {
+      "access-lists": {
+        "access-list": [
+          {
+            "name": "mud-codeflex-dev-acl-to"
+          },
+	  {
+            "name": "mud-codeflex-dev-acl-to-2"
+          }
+        ]
+      }
+    }
+  },
+  "ietf-access-control-list:acls": {
+    "acl": [
+      {
+        "name": "mud-codeflex-dev-acl-to",
+        "type": "ipv6-acl-type",
+        "aces": {
+          "ace": [
+            {
+              "name": "cl0-todev",
+              "matches": {
+                "ipv6": {
+                  "ietf-acldns:src-dnsname": "mud.codeflex.dev",
+                  "protocol": 6
+                },
+                "tcp": {
+                  "ietf-mud:direction-initiated": "from-device",
+                  "source-port": {
+                    "operator": "eq",
+                    "port": 443
+                  }
+                }
+              },
+              "actions": {
+                "forwarding": "accept"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "mud-codeflex-dev-acl-to-2",
+        "type": "ipv6-acl-type",
+        "aces": {
+          "ace": [
+            {
+              "name": "cl1-todev",
+              "matches": {
+                "ipv6": {
+                  "ietf-acldns:src-dnsname": "mud.verano.nl",
+                  "protocol": 6
+                },
+                "tcp": {
+                  "ietf-mud:direction-initiated": "from-device",
+                  "source-port": {
+                    "operator": "eq",
+                    "port": 443
+                  }
+                }
+              },
+              "actions": {
+                "forwarding": "accept"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "mud-codeflex-dev-acl-fr-2",
+        "type": "ipv6-acl-type",
+        "aces": {
+          "ace": [
+            {
+              "name": "cl1-fromdev",
+              "matches": {
+                "ipv6": {
+                  "ietf-acldns:src-dnsname": "mud.verano.nl",
+                  "protocol": 6
+                },
+                "tcp": {
+                  "ietf-mud:direction-initiated": "from-device",
+                  "source-port": {
+                    "operator": "eq",
+                    "port": 443
+                  }
+                }
+              },
+              "actions": {
+                "forwarding": "accept"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "mud-codeflex-dev-acl-fr",
+        "type": "ipv6-acl-type",
+        "aces": {
+          "ace": [
+            {
+              "name": "cl0-frdev",
+              "matches": {
+                "ipv6": {
+                  "ietf-acldns:dst-dnsname": "mud.codeflex.dev",
+                  "protocol": 6
+                },
+                "tcp": {
+                  "ietf-mud:direction-initiated": "from-device",
+                  "destination-port": {
+                    "operator": "eq",
+                    "port": 443
+                  }
+                }
+              },
+              "actions": {
+                "forwarding": "accept"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
