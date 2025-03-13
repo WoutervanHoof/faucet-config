@@ -1,15 +1,13 @@
 # Compose file for setting up the faucet SDN controller
 # as well as the MUD file server and (TODO) the MUD manager
-# include:
-#   - '../faucet/docker-compose.yaml'
+include:
+  - '../faucet/docker-compose.yaml'
 
 services:
   mudfileserver:
-    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile.mud_fileserver
-    image: mudthreadv2/mud_fileserver
     ports:
       - '3001:3000'
     volumes:

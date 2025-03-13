@@ -1,5 +1,8 @@
 include:
     - acls.yaml
+    - acls-none.yaml
+    - acls-all.yaml
+    - ./acls/fd99:aaaa:bbbb:100::5/localhost:3001_mud_telnet.yaml
 
 vlans:
     border_router_1:
@@ -48,7 +51,7 @@ dps:
                 name: "ThreadBR1"
                 description: "thread interface"
                 native_vlan: border_router_1
-                acls_in: [block-telnet]
+                acls_in: [allow-none, fd99_aaaa_bbbb_100__5]
             2:
                 name: "Attacker2"
                 description: "Attacker machine"
@@ -65,7 +68,7 @@ dps:
                 name: "ThreadBR2"
                 description: "thread interface"
                 native_vlan: border_router_2
-                acls_in: [block-telnet]
+                acls_in: [allow-all]
             2:
                 name: "Attacker2"
                 description: "Attacker machine 2"
