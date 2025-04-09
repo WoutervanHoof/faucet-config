@@ -55,6 +55,8 @@ border_router_up() {
 }
 
 border_router_down() {
+    ovs-docker del-port "$BRIDGE" eth0 thread-br || true
+
     docker stop "thread-br" || true
     docker rm "thread-br" || true
 }
@@ -96,6 +98,7 @@ NUMBER=""
 IPversion="6"
 BRIDGE=""
 BRIDGE_NAME=""
+BRIDGE_ONLY="0"
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -136,6 +139,10 @@ while [[ "$#" -gt 0 ]]; do
                 echo "Please provide a valid bridge name after -b or --bridge"
                 exit 1
             fi
+            ;;
+        -B | --bridge-only)
+            BRIDGE_ONLY="1"
+            shift
             ;;
         *)
             echo >&2 "$UTIL: unknown command \"$1\" (use -h, --help for help)"
@@ -186,9 +193,11 @@ if [[ "$UP" = "1" ]] ; then
         BRIDGE="$BRIDGE_NAME"
     fi
 
-    if [[ "$TEST" -eq "1" ]] ; then
-        test_up
+    if [[ "$BRIDGE_ONLY" -eq "0" ]] ; then
+        if [[ "$TEST" -eq "1" ]] ; then
+            test_up
+        fi        
+    
+        border_router_up
     fi
-
-    border_router_up
 fi
