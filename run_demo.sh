@@ -49,6 +49,11 @@ test_down(){
 border_router_up() {
     modprobe ip6table_filter
 
+    if [[! -f "/dev/ttyACM0" ]] ; then
+        echo "/dev/ttyACM0 does not exist, exiting..."
+        exit 1
+    fi
+
     docker run -d --name="thread-br" --net=none --sysctl "net.ipv6.conf.all.disable_ipv6=0 net.ipv4.conf.all.forwarding=1 net.ipv6.conf.all.forwarding=1" -p 8080:80 --dns=172.0.0.1 -it --volume /dev/ttyACM0:/dev/ttyACM0 --volume "$dumps_dir":"$dumps_dir" --privileged openthread/otbr --radio-url spinel+hdlc+uart:///dev/ttyACM0
 
     ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BORDER_ROUTER_SUBNET" --gateway="$BRIDGE_IP"
