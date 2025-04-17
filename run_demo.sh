@@ -49,7 +49,7 @@ test_down(){
 border_router_up() {
     modprobe ip6table_filter
 
-    if [[! -f "/dev/ttyACM0" ]] ; then
+    if [[ ! -e "/dev/ttyACM0" ]] ; then
         echo "/dev/ttyACM0 does not exist, exiting..."
         exit 1
     fi
