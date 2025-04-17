@@ -1,33 +1,12 @@
 acls:
-    IPADDR:
+    block-telnet:
         - rule:
-            dl_type: 0x86dd
-            ipv6_dst: "DEVICE_IP"
-            nw_proto: 58 # ICMP
-            actions:
-                allow: 1
-        - rule:
-            dl_type: 0x86dd
-            ipv6_src: "DEVICE_IP"
-            nw_proto: 58 # ICMP
-            actions:
-                allow: 1
-        - rule:
-            dl_type: 0x86dd # IPv6
-            ipv6_src: "fd99:aaaa:bbbb:100::3"
-            ipv6_dst: "DEVICE_IP"
+            eth_type: 0x86dd # IPv6
+            ipv6_dst: "fd71:666b:b2e1:bfd9:84f2:efcb:54bb:572d"
             nw_proto: 6     # TCP
             tcp_dst: 23     # Telnet
             actions:
-                allow: 1
-        - rule:
-            dl_type: 0x86dd
-            ipv6_src: "DEVICE_IP"
-            ipv6_dst: "fd99:aaaa:bbbb:100::3"
-            nw_proto: 6
-            tcp_src: 23
-            actions:
-                allow: 1
-        - rule:
-            actions:
                 allow: 0
+        - rule:
+            actions:
+                allow: 1
