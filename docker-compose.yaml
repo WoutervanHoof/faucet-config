@@ -2,15 +2,24 @@
 # as well as the MUD file server and (TODO) the MUD manager
 include:
   - '../faucet/docker-compose.yaml'
+  - '../mud-manager/docker-compose.yaml'
 
 services:
-  mudfileserver:
-    build:
-      context: .
-      dockerfile: Dockerfile.mud_fileserver
-    ports:
-      - '3001:3000'
-    volumes:
-      - ./mudfiles:/home/static
-    # links:
-    #   - faucet
+    mudfileserver:
+        build:
+            context: .
+            dockerfile: Dockerfile.mud_fileserver
+        ports:
+            - '3001:3000'
+        volumes:
+            - ./mudfiles:/home/static
+        links:
+            - mud-manager
+    
+    mud-manager:
+        links:
+            - faucet
+    
+    faucet:
+        environment:
+            - FAUCET_CONFIG_STAT_RELOAD: 'True'
