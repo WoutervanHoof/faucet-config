@@ -1,0 +1,6 @@
+services:    
+    mud-manager:
+        volumes:
+            - '${FAUCET_PREFIX}/etc/faucet/:/etc/faucet/'
+        links:
+            - faucet

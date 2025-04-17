@@ -1,0 +1,4 @@
+services:
+    faucet:
+        environment:
+            FAUCET_CONFIG_STAT_RELOAD: 'True'

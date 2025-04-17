@@ -1,8 +1,12 @@
 # Compose file for setting up the faucet SDN controller
 # as well as the MUD file server and (TODO) the MUD manager
 include:
-  - '../faucet/docker-compose.yaml'
-  - '../mud-manager/docker-compose.yaml'
+    - path:
+        - '../faucet/docker-compose.yaml'
+        - 'faucet.override.yaml'
+    - path:
+        - '../mud-manager/docker-compose.yaml'
+        - mud-manager.override.yaml
 
 services:
     mudfileserver:
@@ -15,11 +19,3 @@ services:
             - ./mudfiles:/home/static
         links:
             - mud-manager
-    
-    mud-manager:
-        links:
-            - faucet
-    
-    faucet:
-        environment:
-            - FAUCET_CONFIG_STAT_RELOAD: 'True'
