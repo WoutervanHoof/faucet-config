@@ -3,16 +3,16 @@
 include:
     - path:
         - '../faucet/docker-compose.yaml'
-        - 'faucet.override.yaml'
+        - './docker/faucet.override.yaml'
     - path:
         - '../mud-manager/docker-compose.yaml'
-        - mud-manager.override.yaml
+        - './docker/mud-manager.override.yaml'
 
 services:
     mudfileserver:
         build:
             context: .
-            dockerfile: Dockerfile.mud_fileserver
+            dockerfile: ./docker/Dockerfile.mud_fileserver
         ports:
             - '3001:3000'
         volumes:
