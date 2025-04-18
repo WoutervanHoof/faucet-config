@@ -1,12 +1,14 @@
 acls:
-    block-telnet:
+    block-openthread:
         - rule:
-            eth_type: 0x86dd # IPv6
-            ipv6_dst: "fd71:666b:b2e1:bfd9:84f2:efcb:54bb:572d"
-            nw_proto: 6     # TCP
-            tcp_dst: 23     # Telnet
+            # Block all IPv6 traffic to the whole openthread range
+            dl_type: 0x86DD
+            ipv6_dst: "fd71:666b:b2e1:bfd9::/64"
             actions:
                 allow: 0
         - rule:
+            # Block all IPv6 traffic from the whole openthread range
+            dl_type: 0x86DD
+            ipv6_src: "fd71:666b:b2e1:bfd9::/64"
             actions:
-                allow: 1
+                allow: 0
