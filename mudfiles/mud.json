@@ -1,132 +1,130 @@
 {
     "ietf-mud:mud": {
-      "mud-version": 1,
-      "mud-url": "https://mud.codeflex.dev/files/demo/mud.json",
-      "last-update": "2023-06-07T15:39:43+01:00",
-      "mud-signature": "https://mud.codeflex.dev/files/demo/mud.json.p7s",
-      "cache-validity": 1,
-      "is-supported": true,
-      "systeminfo": "MUD Example - Block Port 23, Allow ICMPv6 ping, Allow myupdateserver.nl",
-      "from-device-policy": {
-        "access-lists": {
-          "access-list": [
-            {
-              "name": "mud-allow-ping-from-device"
-            },
-            {
-              "name": "mud-allow-updateserver-from-device"
+        "mud-version": 1,
+        "mud-url": "http://localhost:3001/mud_telnet.json",
+        "last-update": "2025-03-12T10:03:00+01:00",
+        "mud-signature": "",
+        "cache-validity": 48,
+        "is-supported": true,
+        "systeminfo": "MultiMUD (TODO title) example",
+        "from-device-policy": {
+            "access-lists": {
+                "access-list": [
+                    {
+                        "name": "allow-icmpv6-from-device"
+                    },
+                    {
+                        "name": "allow-telnet-from-device-to-manager"
+                    }
+                ]
             }
-          ]
-        }
-      },
-      "to-device-policy": {
-        "access-lists": {
-          "access-list": [
-            {
-              "name": "mud-allow-ping-to-device"
-            },
-            {
-              "name": "mud-allow-updateserver-to-device"
+        },
+        "to-device-policy": {
+            "access-lists": {
+                "access-list": [
+                    {
+                        "name": "allow-icmpv6-to-device"
+                    },
+                    {
+                        "name": "allow-telnet-to-device-from-manager"
+                    }
+                ]
             }
-          ]
         }
-      }
     },
     "ietf-access-control-list:acls": {
-      "acl": [
-        {
-          "name": "mud-allow-ping-from-device",
-          "type": "ipv6-acl-type",
-          "aces": {
-            "ace": [
-              {
-                "name": "icmpv6-from-device",
-                "matches": {
-                  "ipv6": {
-                    "protocol": 58
-                  }
-                },
-                "actions": {
-                  "forwarding": "accept"
+        "acl": [
+            {
+                "name": "allow-icmpv6-to-device",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-icmp",
+                            "matches": {
+                                "ipv6": {
+                                    "protocol": 58
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
                 }
-              }
-            ]
-          }
-        },
-        {
-          "name": "mud-allow-ping-to-device",
-          "type": "ipv6-acl-type",
-          "aces": {
-            "ace": [
-              {
-                "name": "icmpv6-to-device",
-                "matches": {
-                  "ipv6": {
-                    "protocol": 58
-                  }
-                },
-                "actions": {
-                  "forwarding": "accept"
+            },{
+                "name": "allow-icmpv6-from-device",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-icmp",
+                            "matches": {
+                                "ipv6": {
+                                    "protocol": 58
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
                 }
-              }
-            ]
-          }
-        },
-        {
-          "name": "mud-allow-updateserver-from-device",
-          "type": "ipv6-acl-type",
-          "aces": {
-            "ace": [
-              {
-                "name": "updateserver-from-device",
-                "matches": {
-                  "ipv6": {
-                    "ietf-acldns:dst-dnsname": "myupdateserver.nl",
-                    "protocol": 6
-                  },
-                  "tcp": {
-                    "ietf-mud:direction-initiated": "from-device",
-                    "destination-port": {
-                      "operator": "eq",
-                      "port": 443
-                    }
-                  }
-                },
-
-                "actions": {
-                  "forwarding": "accept"
+            },
+            {
+                "name": "allow-telnet-to-device-from-manager",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-telnet",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:src-dnsname": "manager.local",
+                                    "protocol": 6
+                                },
+                                "tcp": {
+                                    "ietf-mud:direction-initiated": "to-device",
+                                    "destination-port": {
+                                        "operator": "eq",
+                                        "port": 23
+                                    }
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
                 }
-              }
-            ]
-          }
-        },
-        {
-          "name": "mud-allow-updateserver-to-device",
-          "type": "ipv6-acl-type",
-          "aces": {
-            "ace": [
-              {
-                "name": "updateserver-to-device",
-                "matches": {
-                  "ipv6": {
-                    "ietf-acldns:src-dnsname": "myupdateserver.nl",
-                    "protocol": 6
-                  },
-                  "tcp": {
-                    "ietf-mud:direction-initiated": "from-device",
-                    "source-port": {
-                      "operator": "eq",
-                      "port": 443
-                    }
-                  }
-                },
-                "actions": {
-                  "forwarding": "accept"
+            },
+            {
+                "name": "allow-telnet-from-device-to-manager",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-telnet",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:dst-dnsname": "manager.local",
+                                    "protocol": 6
+                                },
+                                "tcp": {
+                                    "ietf-mud:direction-initiated": "to-device",
+                                    "source-port": {
+                                        "operator": "eq",
+                                        "port": 23
+                                    }
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
                 }
-              }
-            ]
-          }
-        }
-      ]
+            }
+        ]
     }
-  }
+}
