@@ -28,8 +28,24 @@ bridge_down() {
 test_up() {
     # We disable accept_ra and autoconf to block the borderrouters from spreading ips.
     # Those IPs mess up the preconfigured routes
-    docker run -d --name="$TEST_NAME"1 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --sysctl "net.ipv6.conf.all.autoconf=0 net.ipv6.conf.all.accept_ra=0" --sysctl "net.ipv6.conf.default.autoconf=0" --sysctl "net.ipv6.conf.default.accept_ra=0" --volume "$dumps_dir":"$dumps_dir" nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
-    docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --volume "$dumps_dir":"$dumps_dir" nginx:alpine
+    docker run -d --name="$TEST_NAME"1 --net=none \
+        --cap-add NET_ADMIN \
+        --sysctl "net.ipv6.conf.all.disable_ipv6=0" \
+        --sysctl "net.ipv6.conf.all.autoconf=0" \
+        --sysctl "net.ipv6.conf.all.accept_ra=0" \
+        --sysctl "net.ipv6.conf.default.autoconf=0" \
+        --sysctl "net.ipv6.conf.default.accept_ra=0" \
+        --volume "$dumps_dir":"$dumps_dir" \
+        nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
+    docker run -d --name="$TEST_NAME"2 --net=none \
+        --cap-add NET_ADMIN \
+        --sysctl "net.ipv6.conf.all.disable_ipv6=0" \
+        --sysctl "net.ipv6.conf.all.autoconf=0" \
+        --sysctl "net.ipv6.conf.all.accept_ra=0" \
+        --sysctl "net.ipv6.conf.default.autoconf=0" \
+        --sysctl "net.ipv6.conf.default.accept_ra=0" \
+        --volume "$dumps_dir":"$dumps_dir" 
+        nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
 
     sudo ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
     sudo ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
@@ -86,7 +102,11 @@ usage() {
         Options:
         -h, --help          display this help message.
         -t, --test          Add two docker containers to the bridge for testing
-        -n, --number        Sets the number used to identify the border router. This sets both the IPv6 network submask as well as the datapath-id for OVS
+        -n, --number NUMBER Sets the number used to identify the border router. This sets both the IPv6 network submask as well as the datapath-id for OVS
+        -c, --clean         Clean up a previous run of this script (in case smt went wrong)
+        -4, --ipv4          Use IPv4 addresses
+        -b, --bridge BRIDGE An OVS bridge is already running, use it instead of creating a new one
+        -B, --bridge-only   Only deploy the bridge, do not attach docker containers
 EOF
 }
 
