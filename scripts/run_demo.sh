@@ -5,26 +5,24 @@
 # Add the Border Router
 # Add an internet connected interface
 
-# . ./ovs-docker_copy.sh
-
 set -euxo pipefail
 
 . ./network_layout.sh
 
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
-    ovs-vsctl --may-exist add-br "$BRIDGE" \
+    sudo ovs-vsctl --may-exist add-br "$BRIDGE" \
         -- set bridge "$BRIDGE" other-config:datapath-id=000000000000000"$NUMBER" \
         -- set bridge "$BRIDGE" other-config:disable-in-band=true \
         -- set bridge "$BRIDGE" fail_mode=secure \
         -- set-controller "$BRIDGE" "tcp:${CONTROLLER_IP}:6653" "tcp:${CONTROLLER_IP}:6654"
     
-    ip addr add "$BRIDGE_ADDRESS" dev "$BRIDGE"
+    sudo ip addr add "$BRIDGE_ADDRESS" dev "$BRIDGE"
 }
 
 bridge_down() {
-    ip addr flush dev "$BRIDGE" || true
-    ovs-vsctl --if-exists del-br "$BRIDGE"
+    sudo ip addr flush dev "$BRIDGE" || true
+    sudo ovs-vsctl --if-exists del-br "$BRIDGE"
 }
 
 test_up() {
@@ -33,21 +31,20 @@ test_up() {
     docker run -d --name="$TEST_NAME"1 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --sysctl "net.ipv6.conf.all.autoconf=0 net.ipv6.conf.all.accept_ra=0" --sysctl "net.ipv6.conf.default.autoconf=0" --sysctl "net.ipv6.conf.default.accept_ra=0" --volume "$dumps_dir":"$dumps_dir" nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
     docker run -d --name="$TEST_NAME"2 --net=none --cap-add NET_ADMIN --sysctl "net.ipv6.conf.all.disable_ipv6=0" --volume "$dumps_dir":"$dumps_dir" nginx:alpine
 
-    ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
-    ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
+    sudo ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
+    sudo ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
 }
 
 test_down(){
-    ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"1 || true
-    ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"2 || true
+    sudo ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"1 || true
+    sudo ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"2 || true
 
     docker stop "$TEST_NAME"1 "$TEST_NAME"2 || true
     docker rm "$TEST_NAME"1 "$TEST_NAME"2 || true
-    
 }
 
 border_router_up() {
-    modprobe ip6table_filter
+    sudo modprobe ip6table_filter
 
     if [[ ! -e "/dev/ttyACM0" ]] ; then
         echo "/dev/ttyACM0 does not exist, exiting..."
@@ -65,11 +62,11 @@ border_router_up() {
 	    wouter/otbr-pi \
 	    --radio-url "spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=115200&uart-flow-control"
 
-    ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BORDER_ROUTER_SUBNET" --gateway="$BRIDGE_IP"
+    sudo ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BORDER_ROUTER_SUBNET" --gateway="$BRIDGE_IP"
 }
 
 border_router_down() {
-    ovs-docker del-port "$BRIDGE" eth0 thread-br || true
+    sudo ovs-docker del-port "$BRIDGE" eth0 thread-br || true
 
     docker stop "thread-br" || true
     docker rm "thread-br" || true
@@ -149,7 +146,7 @@ while [[ "$#" -gt 0 ]]; do
             BRIDGE_NAME="$2"
             shift 2
 
-            if ! sudo ovs-vsctl br-exists "$BRIDGE_NAME" ; then
+            if ! sudo sudo ovs-vsctl br-exists "$BRIDGE_NAME" ; then
                 echo "Please provide a valid bridge name after -b or --bridge"
                 exit 1
             fi
