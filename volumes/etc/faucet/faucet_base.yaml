@@ -1,8 +1,5 @@
 include:
     - acls.yaml
-    # - acls-none.yaml
-    # - acls-all.yaml
-    # - "./acls/fd99:aaaa:bbbb:100::5/localhost:3001_mud_telnet.yaml"
 
 vlans:
     border_router_1:
@@ -46,15 +43,22 @@ dps:
                 name: "ThreadBR1"
                 description: "thread interface"
                 native_vlan: border_router_1
-                acls_in: [block-telnet]
+                acls_in:
+                    - allow-mud
+                    - allow-borderrouter        
+                    - block-openthread
             2:
                 name: "Attacker2"
                 description: "Attacker machine"
                 native_vlan: border_router_1
+                acls_in:
+                    - block-openthread
             3:
                 name: "Test"
                 description: "Test interface to ping from"
                 native_vlan: border_router_1
+                acls_in:
+                    - block-openthread
     sw2:
         dp_id: 0x2
         hardware: "Open vSwitch"
@@ -63,12 +67,19 @@ dps:
                 name: "ThreadBR2"
                 description: "thread interface"
                 native_vlan: border_router_2
-                # acls_in: [temp]
+                acls_in:
+                    - allow-mud
+                    - allow-borderrouter
+                    - block-openthread
             2:
                 name: "Attacker2"
                 description: "Attacker machine 2"
-                native_vlan: border_router_2
+                native_vlan: border_router_2    
+                acls_in:
+                    - block-openthread
             3:
                 name: "Test2"
                 description: "Test interface to duplicate 2"
                 native_vlan: border_router_2
+                acls_in:
+                    - block-openthread
