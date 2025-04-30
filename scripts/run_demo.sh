@@ -13,15 +13,13 @@ get_port_for_container_interface () {
     CONTAINER="$1"
     INTERFACE="$2"
 
-    PORT=`ovs_vsctl --data=bare --no-heading --columns=name find interface \
+    PORT=`sudo ovs-vsctl --data=bare --no-heading --columns=name find interface \
              external_ids:container_id="$CONTAINER"  \
              external_ids:container_iface="$INTERFACE"`
-    set +u
     if [ -z "$PORT" ]; then
-        echo >&2 "$UTIL: Failed to find any attached port" \
+        echo >&2 "Failed to find any attached port" \
                  "for CONTAINER=$CONTAINER and INTERFACE=$INTERFACE"
     fi
-    set -u
     echo "$PORT"
 }
 
