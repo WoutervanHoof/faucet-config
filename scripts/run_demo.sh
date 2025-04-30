@@ -22,11 +22,18 @@ bridge_up() {
     sudo ip addr add "$ATTACKER_FAUCET_VIP" dev "$BRIDGE"
 }
 
+
 bridge_down() {
     sudo ip addr flush dev "$BRIDGE" || true
     sudo ovs-vsctl --if-exists del-br "$BRIDGE"
 }
 
+container_down() {
+    sudo ovs-docker del-port "$BRIDGE" eth0 "$1" || true
+
+    docker stop "$1" || true
+    docker rm "$1" || true
+}
 
 attacker_up() {
     docker run -d --name "attacker" --net=none \
@@ -41,10 +48,7 @@ attacker_up() {
 }
 
 attacker_down(){
-    sudo ovs-docker del-port "$BRIDGE" eth0 "attacker" || true
-
-    docker stop "attacker" || true
-    docker rm "attacker" || true
+    container_down "attacker"
 }
 
 server_up() {
@@ -66,10 +70,7 @@ server_up() {
 }
 
 server_down(){
-    sudo ovs-docker del-port "server" eth0 "$TEST_NAME"1 || true
-
-    docker stop "server" || true
-    docker rm "server" || true
+    container_down "server"
 }
 
 border_router_up() {
@@ -97,10 +98,7 @@ border_router_up() {
 }
 
 border_router_down() {
-    sudo ovs-docker del-port "$BRIDGE" eth0 thread-br || true
-
-    docker stop "thread-br" || true
-    docker rm "thread-br" || true
+    container_down "thread_br"
 }
 
 containers_up() {
@@ -196,7 +194,6 @@ while [[ "$#" -gt 0 ]]; do
     esac
 done
 
-TEST_NAME="br_test"
 CONTROLLER_IP="10.42.0.1"
 
 if [[ "$NUMBER" -lt "1" ]] ; then
