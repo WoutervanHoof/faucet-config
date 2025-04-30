@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export OMR_PREFIX="fd71:666b:b2e1:bfd9::"
-export PREFIX_ROUTE="${OMR_PREFIX}/64"
+export VLANS_ROUTE="fd99:aaaa:bbbb::/48"
 
 export BORDER_ROUTER_VLAN="fd99:aaaa:bbbb:100::"
 export BORDER_ROUTER_PREFIX_ROUTE="${BORDER_ROUTER_VLAN}/64"

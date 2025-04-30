@@ -75,4 +75,4 @@ docker exec "$container_name" curl -s \
     "${url}/form_network"
 
 
-docker exec thread-br ot-ctl netdata publish route "$PREFIX_ROUTE" s high
+docker exec thread-br ot-ctl netdata publish route "$VLANS_ROUTE" s high
