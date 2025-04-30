@@ -9,6 +9,20 @@ set -euxo pipefail
 
 source "./network_layout.sh"
 
+get_port_for_container_interface () {
+    CONTAINER="$1"
+    INTERFACE="$2"
+ 
+    PORT=`ovs_vsctl --data=bare --no-heading --columns=name find interface \
+             external_ids:container_id="$CONTAINER"  \
+             external_ids:container_iface="$INTERFACE"`
+    if [ -z "$PORT" ]; then
+        echo >&2 "$UTIL: Failed to find any attached port" \
+                 "for CONTAINER=$CONTAINER and INTERFACE=$INTERFACE"
+    fi
+    echo "$PORT"
+}
+
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
     sudo ovs-vsctl --may-exist add-br "$BRIDGE" \
@@ -45,6 +59,9 @@ attacker_up() {
     sudo ovs-docker add-port "$BRIDGE" eth0 "attacker" \
         --ipaddress="$ATTACKER_IP" \
         --gateway="$ATTACKER_FAUCET_VIP"
+
+    PORT=`get_port_for_container_interface "attacker" "eth0"`
+    sudo ovs-vsctl set interface "$PORT" ofport_request=3
 }
 
 attacker_down(){
@@ -57,16 +74,19 @@ server_up() {
     docker run -d --name="server" --net=none \
         --cap-add NET_ADMIN \
         --sysctl "net.ipv6.conf.all.disable_ipv6=0" \
-        --sysctl "net.ipv6.conf.all.autoconf=0" \
-        --sysctl "net.ipv6.conf.all.accept_ra=0" \
-        --sysctl "net.ipv6.conf.default.autoconf=0" \
-        --sysctl "net.ipv6.conf.default.accept_ra=0" \
+        # --sysctl "net.ipv6.conf.all.autoconf=0" \
+        # --sysctl "net.ipv6.conf.all.accept_ra=0" \
+        # --sysctl "net.ipv6.conf.default.autoconf=0" \
+        # --sysctl "net.ipv6.conf.default.accept_ra=0" \
         --volume "$dumps_dir":"$dumps_dir" \
         nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
 
     sudo ovs-docker add-port "$BRIDGE" eth0 "server" \
         --ipaddress="$SERVER_IP" \
         --gateway="$SERVER_FAUCET_VIP"
+    
+    PORT=`get_port_for_container_interface "server" "eth0"`
+    sudo ovs-vsctl set interface "$PORT" ofport_request=2
 }
 
 server_down(){
@@ -95,6 +115,9 @@ border_router_up() {
     sudo ovs-docker add-port "$BRIDGE" eth0 thread-br \
         --ipaddress="$BORDER_ROUTER_SUBNET" \
         --gateway="$BORDER_ROUTER_FAUCET_VIP"
+
+    PORT=`get_port_for_container_interface "thread-br" "eth0"`
+    sudo ovs-vsctl set interface "$PORT" ofport_request=1
 }
 
 border_router_down() {
