@@ -2,10 +2,9 @@
 
 set -exo pipefail
 
-. ./network_layout.sh
+source ./network_layout.sh
 
-IPversion="6"
-container_name="br_test1"
+container_name="server"
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -17,10 +16,6 @@ while [[ "$#" -gt 0 ]]; do
         #     usage
         #     exit 0
         #     ;;
-        -4 | --ipv4)
-            IPversion="4"
-            shift
-            ;;
         *)
             # Little ugly, but just catch unkown last argument as name            
             container_name="$1"
@@ -36,35 +31,27 @@ fi
 
 set -u
 
-passphrase="mystify-vantage-deduct"
 NET_KEY="00112233445566778899aabbccddeeff"
-
-get_network_variables
-
 url="http://[${BORDER_ROUTER_IP}]:80"
 
-if [[ "$IPversion" = "4" ]] ; then
-    BORDER_ROUTER_IP="10.43.${NUMBER}.2"
-    url="http://${BORDER_ROUTER_IP}:80"
-fi
-
-set -u
-
-if docker exec "$container_name" curl -s -H "Content-Type: application/json" --request GET "${url}/available_network" | grep -q "\"error\":0" ; then 
-    docker exec "$container_name" curl -s -H "Content-Type: application/json" --request POST --data '{
-        "credentialType":"networkKeyType",
-        "networkKey":"'"${NET_KEY}"'",
-        "prefix":"'"${ORM_PREFIX2}"'",
-        "defaultRoute":false,
-        "index":0
-    }' \
-     "${url}/join_network"
+if docker exec "$container_name" \
+    curl -s -H "Content-Type: application/json" \
+        "${url}/available_network" \
+    | grep -q "\"error\":0"
+then 
+    docker exec "$container_name" \
+        curl -s -H "Content-Type: application/json" \
+            --request POST --data '{
+                "credentialType":"networkKeyType",
+                "networkKey":"'"${NET_KEY}"'",
+                "prefix":"'"${OMR_PREFIX}"'",
+                "defaultRoute":false,
+                "index":0
+            }' \
+            "${url}/join_network"
 else
     echo "Failed to get available networks"
     exit 1
 fi
 
-#docker exec "$container_name" ip -6 route add "${ORM_PREFIX}"/64 via "$BORDER_ROUTER_IP"
 docker exec thread-br ot-ctl netdata publish route "$PREFIX_ROUTE" s high
-# docker exec thread-br ip route add fdbe:ef11:11ca:2222::/64 dev eth0
-# docker exec thread-br ot-ctl netdata publish fdbe:ef11:11ca:2222::/64 s high

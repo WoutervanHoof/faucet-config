@@ -25,7 +25,6 @@ acls:
             ipv6_src: "fd71:666b:b2e1:bfd9::/64"
             actions:
                 allow: 0
-    allow-borderrouter:
         - rule:
             # Allow all traffick within the fd99... subnet (for demo/testing purposes)
             dl_type: 0x86DD

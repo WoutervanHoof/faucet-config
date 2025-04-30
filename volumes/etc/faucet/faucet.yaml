@@ -10,29 +10,29 @@ vlans:
             - 'fe80::c00:00ff:fe00:1001/64'
             - 'fd99:aaaa:bbbb:100::1/64'
             - '10.0.100.254/24'
-            # - 'fd71:666b:b2e1:bfd9::1/64'
         routes:
             - route:
                 ip_dst: 'fd71:666b:b2e1:bfd9::/64'
                 ip_gw: 'fd99:aaaa:bbbb:100::2'
-    border_router_2:
+    admin:
         vid: 200
-        description: "Second border router VLAN (has an attacker)"
+        description: "VLAN for admin services"
         faucet_mac: "0e:00:00:00:20:01"
         faucet_vips:
             - 'fe80::c00:00ff:fe00:2001/64'
             - 'fd99:aaaa:bbbb:200::1/64'
             - '10.0.200.254/24'
-        routes:
-            - route:
-                ip_dst: 'fd71:666b:b2e1:bfd9::/64'
-                ip_gw: 'fd99:aaaa:bbbb:200::2'
-            - route:
-                ip_dst: 'fd11:22:1:1::/64'
-                ip_gw: 'fd99:aaaa:bbbb:200::2'
+    attacker:
+        vid: 300
+        description: "VLAN for attacker box/untrusted vlan"
+        faucet_mac: "0e:00:00:00:30:01"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:3001/64'
+            - 'fd99:aaaa:bbbb:300::1/64'
+            - '10.0.300.254/24'
 routers:
     router1:
-        vlans: [border_router_1, border_router_2]
+        vlans: [border_router_1, admin, attacker]
 
 dps:
     sw1:
@@ -45,41 +45,18 @@ dps:
                 native_vlan: border_router_1
                 acls_in:
                     - allow-mud
-                    - allow-borderrouter        
                     - block-openthread
             2:
                 name: "Attacker2"
                 description: "Attacker machine"
-                native_vlan: border_router_1
+                native_vlan: admin
                 acls_in:
+                    - allow-mud
                     - block-openthread
             3:
                 name: "Test"
                 description: "Test interface to ping from"
-                native_vlan: border_router_1
-                acls_in:
-                    - block-openthread
-    sw2:
-        dp_id: 0x2
-        hardware: "Open vSwitch"
-        interfaces:
-            1:
-                name: "ThreadBR2"
-                description: "thread interface"
-                native_vlan: border_router_2
+                native_vlan: attacker
                 acls_in:
                     - allow-mud
-                    - allow-borderrouter
-                    - block-openthread
-            2:
-                name: "Attacker2"
-                description: "Attacker machine 2"
-                native_vlan: border_router_2    
-                acls_in:
-                    - block-openthread
-            3:
-                name: "Test2"
-                description: "Test interface to duplicate 2"
-                native_vlan: border_router_2
-                acls_in:
                     - block-openthread

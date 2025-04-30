@@ -7,7 +7,7 @@
 
 set -euxo pipefail
 
-. ./network_layout.sh
+source "./network_layout.sh"
 
 # Create bridge, set controller to "$CONTROLLER_IP" (TODO: allow setting IP)
 bridge_up() {
@@ -17,7 +17,9 @@ bridge_up() {
         -- set bridge "$BRIDGE" fail_mode=secure \
         -- set-controller "$BRIDGE" "tcp:${CONTROLLER_IP}:6653" "tcp:${CONTROLLER_IP}:6654"
     
-    sudo ip addr add "$BRIDGE_ADDRESS" dev "$BRIDGE"
+    sudo ip addr add "$BORDER_ROUTER_FAUCET_VIP" dev "$BRIDGE"
+    sudo ip addr add "$SERVER_FAUCET_VIP" dev "$BRIDGE"
+    sudo ip addr add "$ATTACKER_FAUCET_VIP" dev "$BRIDGE"
 }
 
 bridge_down() {
@@ -25,10 +27,30 @@ bridge_down() {
     sudo ovs-vsctl --if-exists del-br "$BRIDGE"
 }
 
-test_up() {
+
+attacker_up() {
+    docker run -d --name "attacker" --net=none \
+        --cap-add NET_ADMIN \
+        --sysctl "net.ipv6.conf.all.disable_ipv6=0" \
+        --volume "$dumps_dir":"$dumps_dir" \
+        nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
+    
+    sudo ovs-docker add-port "$BRIDGE" eth0 "attacker" \
+        --ipaddress="$ATTACKER_IP" \
+        --gateway="$ATTACKER_FAUCET_VIP"
+}
+
+attacker_down(){
+    sudo ovs-docker del-port "$BRIDGE" eth0 "attacker" || true
+
+    docker stop "attacker" || true
+    docker rm "attacker" || true
+}
+
+server_up() {
     # We disable accept_ra and autoconf to block the borderrouters from spreading ips.
     # Those IPs mess up the preconfigured routes
-    docker run -d --name="$TEST_NAME"1 --net=none \
+    docker run -d --name="server" --net=none \
         --cap-add NET_ADMIN \
         --sysctl "net.ipv6.conf.all.disable_ipv6=0" \
         --sysctl "net.ipv6.conf.all.autoconf=0" \
@@ -37,26 +59,17 @@ test_up() {
         --sysctl "net.ipv6.conf.default.accept_ra=0" \
         --volume "$dumps_dir":"$dumps_dir" \
         nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
-    docker run -d --name="$TEST_NAME"2 --net=none \
-        --cap-add NET_ADMIN \
-        --sysctl "net.ipv6.conf.all.disable_ipv6=0" \
-        --sysctl "net.ipv6.conf.all.autoconf=0" \
-        --sysctl "net.ipv6.conf.all.accept_ra=0" \
-        --sysctl "net.ipv6.conf.default.autoconf=0" \
-        --sysctl "net.ipv6.conf.default.accept_ra=0" \
-        --volume "$dumps_dir":"$dumps_dir" 
-        nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
 
-    sudo ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"1 --ipaddress="$TEST1_IP" --gateway="$BRIDGE_IP"
-    sudo ovs-docker add-port "$BRIDGE" eth0 "$TEST_NAME"2 --ipaddress="$TEST2_IP" --gateway="$BRIDGE_IP"
+    sudo ovs-docker add-port "$BRIDGE" eth0 "server" \
+        --ipaddress="$SERVER_IP" \
+        --gateway="$SERVER_FAUCET_VIP"
 }
 
-test_down(){
-    sudo ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"1 || true
-    sudo ovs-docker del-port "$BRIDGE" eth0 "$TEST_NAME"2 || true
+server_down(){
+    sudo ovs-docker del-port "server" eth0 "$TEST_NAME"1 || true
 
-    docker stop "$TEST_NAME"1 "$TEST_NAME"2 || true
-    docker rm "$TEST_NAME"1 "$TEST_NAME"2 || true
+    docker stop "server" || true
+    docker rm "server" || true
 }
 
 border_router_up() {
@@ -78,7 +91,9 @@ border_router_up() {
 	    wouter/otbr-pi \
 	    --radio-url "spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=115200&uart-flow-control"
 
-    sudo ovs-docker add-port "$BRIDGE" eth0 thread-br --ipaddress="$BORDER_ROUTER_SUBNET" --gateway="$BRIDGE_IP"
+    sudo ovs-docker add-port "$BRIDGE" eth0 thread-br \
+        --ipaddress="$BORDER_ROUTER_SUBNET" \
+        --gateway="$BORDER_ROUTER_FAUCET_VIP"
 }
 
 border_router_down() {
@@ -88,6 +103,17 @@ border_router_down() {
     docker rm "thread-br" || true
 }
 
+containers_up() {
+    attacker_up
+    server_up
+    border_router_up
+}
+
+containers_down() {
+    attacker_down
+    server_down
+    border_router_down
+}
 
 usage() {
     cat <<-EOF
@@ -101,10 +127,8 @@ usage() {
 
         Options:
         -h, --help          display this help message.
-        -t, --test          Add two docker containers to the bridge for testing
         -n, --number NUMBER Sets the number used to identify the border router. This sets both the IPv6 network submask as well as the datapath-id for OVS
         -c, --clean         Clean up a previous run of this script (in case smt went wrong)
-        -4, --ipv4          Use IPv4 addresses
         -b, --bridge BRIDGE An OVS bridge is already running, use it instead of creating a new one
         -B, --bridge-only   Only deploy the bridge, do not attach docker containers
 EOF
@@ -122,11 +146,9 @@ if [[ $# -eq 0 ]]; then
     exit 0
 fi
 
-TEST=0
 UP=""
 DOWN=""
 NUMBER=""
-IPversion="6"
 BRIDGE=""
 BRIDGE_NAME=""
 BRIDGE_ONLY="0"
@@ -141,10 +163,6 @@ while [[ "$#" -gt 0 ]]; do
             DOWN="1"
             shift
             ;;
-        -t | --test)
-            TEST=1
-            shift
-            ;;
         -c | --clean)
             docker container prune -f
             DOWN="1"
@@ -157,10 +175,6 @@ while [[ "$#" -gt 0 ]]; do
         -h | --help)
             usage
             exit 0
-            ;;
-        -4 | --ipv4)
-            IPversion="4"
-            shift
             ;;
         -b | --bridge)
             BRIDGE_NAME="$2"
@@ -185,8 +199,6 @@ done
 TEST_NAME="br_test"
 CONTROLLER_IP="10.42.0.1"
 
-get_network_variables
-
 if [[ "$NUMBER" -lt "1" ]] ; then
     echo >&2 "Please provide a valid number with -n or --number"
     exit 1
@@ -206,11 +218,7 @@ if [[ "$DOWN" = "1" ]] ; then
         exit 1
     fi
 
-    if docker ps | grep "$TEST_NAME" > /dev/null ; then
-        test_down
-    fi
-
-    border_router_down
+    containers_down
     
     # Since no bridge name is set, assume default and delete
     bridge_down
@@ -225,10 +233,6 @@ if [[ "$UP" = "1" ]] ; then
     fi
 
     if [[ "$BRIDGE_ONLY" -eq "0" ]] ; then
-        if [[ "$TEST" -eq "1" ]] ; then
-            test_up
-        fi        
-    
-        border_router_up
+        containers_up
     fi
 fi

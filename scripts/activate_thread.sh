@@ -2,7 +2,7 @@
 
 set -exo pipefail
 
-. ./network_layout.sh
+source ./network_layout.sh
 
 NAME=$(basename "$0")
 usage() {
@@ -75,7 +75,7 @@ done
 
 docker exec "$container_name" curl -s -H "Content-Type: application/json" --request POST --data '{
     "networkKey":"'"${NET_KEY}"'",
-    "prefix":"'"${ORM_PREFIX}"'",
+    "prefix":"'"${OMR_PREFIX}"'",
     "defaultRoute":true,
     "extPanId":"'"${EXTPAN}"'",
     "panId":"0x1234",

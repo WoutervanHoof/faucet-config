@@ -1,26 +1,21 @@
 #!/bin/bash
 
-get_network_variables() {
-    ORM_PREFIX="fd71:666b:b2e1:bfd9::"
-    ORM_PREFIX2="fd11:22:1:1::"
+export OMR_PREFIX="fd71:666b:b2e1:bfd9::"
 
-    if [[ "$IPversion" = "4" ]] ; then
-        PREFIX="10.43.${NUMBER}"
-        PREFIX_ROUTE="${PREFIX}.0/24"
-        BRIDGE_IP="${PREFIX}.1"
-        BRIDGE_ADDRESS="${BRIDGE_IP}/24"
-        BORDER_ROUTER_IP="${PREFIX}.2"
-        BORDER_ROUTER_SUBNET="${BORDER_ROUTER_IP}/24"
-        TEST1_IP="${PREFIX}.3/24"
-        TEST2_IP="${PREFIX}.4/24"
-    else
-        PREFIX="fd99:aaaa:bbbb:${NUMBER}00::"
-        PREFIX_ROUTE="${PREFIX}/64"
-        BRIDGE_IP="${PREFIX}1"
-        BRIDGE_ADDRESS="${BRIDGE_IP}/64"
-        BORDER_ROUTER_IP="${PREFIX}2"
-        BORDER_ROUTER_SUBNET="${BORDER_ROUTER_IP}/64"
-        TEST1_IP="${PREFIX}3/64"
-        TEST2_IP="${PREFIX}4/64"
-    fi
-}
+export BORDER_ROUTER_VLAN="fd99:aaaa:bbbb:100::"
+export BORDER_ROUTER_PREFIX_ROUTE="${BORDER_ROUTER_VLAN}/64"
+export BORDER_ROUTER_FAUCET_VIP="${BORDER_ROUTER_VLAN}1"
+export BORDER_ROUTER_IP="${BORDER_ROUTER_VLAN}1"
+export BORDER_ROUTER_SUBNET="${BORDER_ROUTER_IP}/64"
+export 
+export SERVER_VLAN="fd99:aaaa:bbbb:200::"
+export SERVER_PREFIX_ROUTE="${SERVER_VLAN}/64"
+export SERVER_FAUCET_VIP="${SERVER_VLAN}1"
+export SERVER_IP="${SERVER_VLAN}2"
+export SERVER_SUBNET="${SERVER_IP}/64"
+
+export ATTACKER_VLAN="fd99:aaaa:bbbb:300::"
+export ATTACKER_PREFIX_ROUTE="${ATTACKER_VLAN}/64"
+export ATTACKER_FAUCET_VIP="${ATTACKER_VLAN}1"
+export ATTACKER_IP="${ATTACKER_VLAN}2"
+export ATTACKER_SUBNET="${ATTACKER_IP}/64"
