@@ -74,10 +74,6 @@ server_up() {
     docker run -d --name="server" --net=none \
         --cap-add NET_ADMIN \
         --sysctl "net.ipv6.conf.all.disable_ipv6=0" \
-        # --sysctl "net.ipv6.conf.all.autoconf=0" \
-        # --sysctl "net.ipv6.conf.all.accept_ra=0" \
-        # --sysctl "net.ipv6.conf.default.autoconf=0" \
-        # --sysctl "net.ipv6.conf.default.accept_ra=0" \
         --volume "$dumps_dir":"$dumps_dir" \
         nicolaka/netshoot /bin/bash -c "while true; do sleep 60; done"
 
