@@ -98,7 +98,7 @@ border_router_up() {
 }
 
 border_router_down() {
-    container_down "thread_br"
+    container_down "thread-br"
 }
 
 containers_up() {
