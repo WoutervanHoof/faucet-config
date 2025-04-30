@@ -9,7 +9,7 @@ vlans:
         faucet_vips:
             - 'fe80::c00:00ff:fe00:1001/64'
             - 'fd99:aaaa:bbbb:100::1/64'
-            - '10.0.100.254/24'
+            - '10.0.101.254/24'
         routes:
             - route:
                 ip_dst: 'fd71:666b:b2e1:bfd9::/64'
@@ -21,7 +21,7 @@ vlans:
         faucet_vips:
             - 'fe80::c00:00ff:fe00:2001/64'
             - 'fd99:aaaa:bbbb:200::1/64'
-            - '10.0.200.254/24'
+            - '10.0.102.254/24'
     attacker:
         vid: 300
         description: "VLAN for attacker box/untrusted vlan"
@@ -29,7 +29,7 @@ vlans:
         faucet_vips:
             - 'fe80::c00:00ff:fe00:3001/64'
             - 'fd99:aaaa:bbbb:300::1/64'
-            - '10.0.300.254/24'
+            - '10.0.103.254/24'
 routers:
     router1:
         vlans: [border_router_1, admin, attacker]
