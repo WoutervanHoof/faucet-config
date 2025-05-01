@@ -1,13 +1,15 @@
 #!/bin/bash
 
-docker exec thread-br ping -c 2 fd99:aaaa:bbbb:100::1
-docker exec thread-br ping -c 2 fd99:aaaa:bbbb:200::2
-docker exec thread-br ping -c 2 fd99:aaaa:bbbb:300::2
+source ./network_layout.sh
 
-docker exec server ping -c 2 fd99:aaaa:bbbb:200::1
-docker exec server ping -c 2 fd99:aaaa:bbbb:100::2
-docker exec server ping -c 2 fd99:aaaa:bbbb:300::2
+docker exec thread-br ping -c 2 "$BORDER_ROUTER_FAUCET_VIP"
+docker exec thread-br ping -c 2 "$SERVER_IP"
+docker exec thread-br ping -c 2 "$ATTACKER_IP"
 
-docker exec attacker ping -c 2 fd99:aaaa:bbbb:300::1
-docker exec attacker ping -c 2 fd99:aaaa:bbbb:100::2
-docker exec attacker ping -c 2 fd99:aaaa:bbbb:200::2
+docker exec server ping -c 2 "$SERVER_FAUCET_VIP"
+docker exec server ping -c 2 "$BORDER_ROUTER_IP"
+docker exec server ping -c 2 "$ATTACKER_IP"
+
+docker exec attacker ping -c 2 "$ATTACKER_FAUCET_VIP"
+docker exec attacker ping -c 2 "$BORDER_ROUTER_IP"
+docker exec attacker ping -c 2 "$SERVER_IP"

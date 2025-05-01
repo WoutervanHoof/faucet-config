@@ -106,7 +106,8 @@ border_router_up() {
 	    --volume "$dumps_dir":"$dumps_dir" \
 	    --privileged \
 	    wouter/otbr-pi \
-	    --radio-url "spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=115200&uart-flow-control"
+	    --radio-url "spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=115200&uart-flow-control" \
+	    --mud-manager "$BORDER_ROUTER_FAUCET_VIP"
 
     sudo ovs-docker add-port "$BRIDGE" eth0 thread-br \
         --ipaddress="$BORDER_ROUTER_SUBNET" \
