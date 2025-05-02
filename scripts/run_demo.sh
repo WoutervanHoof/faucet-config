@@ -221,6 +221,8 @@ if [[ "$NUMBER" -lt "1" ]] ; then
     exit 1
 fi
 
+get_network_layout
+
 BRIDGE="br${NUMBER}"
 
 dumps_dir="/usr/share/dumps"
