@@ -48,6 +48,8 @@ fi
 
 set -u
 
+get_network_layout
+
 passphrase="mystify-vantage-deduct"
 NET_KEY="00112233445566778899aabbccddeeff"
 

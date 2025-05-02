@@ -31,6 +31,8 @@ fi
 
 set -u
 
+get_network_layout
+
 NET_KEY="00112233445566778899aabbccddeeff"
 url="http://[${BORDER_ROUTER_IP}]:80"
 
