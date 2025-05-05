@@ -11,7 +11,7 @@ get_network_layout() {
     fi
 
     export OMR_PREFIX="fd71:666b:b2e1:bfd9::"
-    export VLANS_ROUTE="{$VLAN_PREFIX}::/48"
+    export VLANS_ROUTE="${VLAN_PREFIX}::/48"
 
     export BORDER_ROUTER_VLAN="${VLAN_PREFIX}:100::"
     export BORDER_ROUTER_PREFIX_ROUTE="${BORDER_ROUTER_VLAN}/64"
