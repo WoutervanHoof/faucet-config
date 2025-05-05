@@ -1,0 +1,49 @@
+acls:
+    allow-mud:
+        # All traffic to udp port 1234 from the thread network should go to the controller
+        - rule:
+            dl_type: 0x86DD
+            ipv6_src: "fd71:666b:b2e1:bfd9::/64"
+            nw_proto: 17
+            udp_dst: 1234
+            actions:
+                # Set destination MAC to controller mac
+                output:
+                    - set_fields:
+                        - eth_dst: "0e:00:00:00:10:01"
+                allow: 1
+    block-openthread:
+        - rule:
+            # Block all IPv6 traffic to the whole openthread range
+            dl_type: 0x86DD
+            ipv6_dst: "fd71:666b:b2e1:bfd9::/64"
+            actions:
+                allow: 0
+        - rule:
+            # Block all IPv6 traffic from the whole openthread range
+            dl_type: 0x86DD
+            ipv6_src: "fd71:666b:b2e1:bfd9::/64"
+            actions:
+                allow: 0
+        - rule:
+            # Allow all traffick within the fd99... subnet (for demo/testing purposes)
+            dl_type: 0x86DD
+            ipv6_dst: "fd99:aaaa:bbbb::/48"
+            actions:
+                allow: 1
+        - rule:
+            dl_type: 0x86DD
+            ipv6_src: "fd99:aaaa:bbbb::/48"
+            actions:
+                allow: 1
+        - rule:
+            # Allow all traffick within the fd99... subnet (for demo/testing purposes)
+            dl_type: 0x86DD
+            ipv6_dst: "fd99:aaaa:cccc::/48"
+            actions:
+                allow: 1
+        - rule:
+            dl_type: 0x86DD
+            ipv6_src: "fd99:aaaa:cccc::/48"
+            actions:
+                allow: 1

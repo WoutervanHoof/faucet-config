@@ -15,6 +15,9 @@
                     },
                     {
                         "name": "allow-telnet-from-device-to-manager"
+                    },
+                    {
+                        "name": "allow-telnet-from-device-to-manager2"
                     }
                 ]
             }
@@ -27,6 +30,9 @@
                     },
                     {
                         "name": "allow-telnet-to-device-from-manager"
+                    },
+                    {
+                        "name": "allow-telnet-to-device-from-manager2"
                     }
                 ]
             }
@@ -99,6 +105,33 @@
                 }
             },
             {
+                "name": "allow-telnet-to-device-from-manager2",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-telnet",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:src-dnsname": "manager2.local",
+                                    "protocol": 6
+                                },
+                                "tcp": {
+                                    "ietf-mud:direction-initiated": "to-device",
+                                    "destination-port": {
+                                        "operator": "eq",
+                                        "port": 23
+                                    }
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
                 "name": "allow-telnet-from-device-to-manager",
                 "type": "ipv6-acl-type",
                 "aces": {
@@ -108,6 +141,33 @@
                             "matches": {
                                 "ipv6": {
                                     "ietf-mud:dst-dnsname": "manager.local",
+                                    "protocol": 6
+                                },
+                                "tcp": {
+                                    "ietf-mud:direction-initiated": "to-device",
+                                    "source-port": {
+                                        "operator": "eq",
+                                        "port": 23
+                                    }
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "allow-telnet-from-device-to-manager2",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-telnet",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:dst-dnsname": "manager2.local",
                                     "protocol": 6
                                 },
                                 "tcp": {
