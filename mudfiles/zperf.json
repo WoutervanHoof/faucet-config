@@ -1,0 +1,130 @@
+{
+    "ietf-mud:mud": {
+        "mud-version": 1,
+        "mud-url": "http://localhost:3001/mud_telnet.json",
+        "last-update": "2025-03-12T10:03:00+01:00",
+        "mud-signature": "",
+        "cache-validity": 48,
+        "is-supported": true,
+        "systeminfo": "MultiMUD (TODO title) example",
+        "from-device-policy": {
+            "access-lists": {
+                "access-list": [
+                    {
+                        "name": "allow-icmpv6-from-device"
+                    },
+                    {
+                        "name": "allow-zperf-from-device-to-server"
+                    }
+                ]
+            }
+        },
+        "to-device-policy": {
+            "access-lists": {
+                "access-list": [
+                    {
+                        "name": "allow-icmpv6-to-device"
+                    },
+                    {
+                        "name": "allow-zperf-to-device-from-server"
+                    }
+                ]
+            }
+        }
+    },
+    "ietf-access-control-list:acls": {
+        "acl": [
+            {
+                "name": "allow-icmpv6-to-device",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-icmp",
+                            "matches": {
+                                "ipv6": {
+                                    "protocol": 58
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            },{
+                "name": "allow-icmpv6-from-device",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-icmp",
+                            "matches": {
+                                "ipv6": {
+                                    "protocol": 58
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "allow-zperf-to-device-from-server",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-zperf",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:src-dnsname": "manager.local",
+                                    "protocol": 17
+                                },
+                                "udp": {
+                                    "ietf-mud:direction-initiated": "from-device",
+                                    "source-port": {
+                                        "operator": "eq",
+                                        "port": 5001
+                                    }
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "allow-zperf-from-device-to-server",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-zperf",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:dst-dnsname": "manager.local",
+                                    "protocol": 17
+                                },
+                                "udp": {
+                                    "ietf-mud:direction-initiated": "from-device",
+                                    "destination-port": {
+                                        "operator": "eq",
+                                        "port": 5001
+                                    }
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
