@@ -105,7 +105,7 @@ border_router_up() {
 	    --volume /dev/ttyACM0:/dev/ttyACM0 \
 	    --volume "$dumps_dir":"$dumps_dir" \
 	    --privileged \
-	    wouter/otbr \
+	    wouter/otbr-pi \
 	    --radio-url "spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=115200&uart-flow-control" \
 	    --mud-manager "$BORDER_ROUTER_FAUCET_VIP"
 
