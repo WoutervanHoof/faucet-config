@@ -7,9 +7,11 @@ source ./network_layout.sh
 iterations=1000
 server_success=0
 attacker_success=0
+CHILD_IP="fd71:666b:b2e1:bfd9:44ea:9c0a:d388:64ae"
+
 
 for i in {1.."$iterations"} ; do 
-    if docker exec server nc -z -w 1 "$CHILD_IP" ; then
+    if docker exec server nc -z -w 1 "$CHILD_IP" 23 ; then
         ((server_success=server_success+1))
     fi
 done
@@ -20,7 +22,7 @@ echo "Number of successful connections to the server:   $server_success"
 echo "Number of unsuccessful connections to the server: $server_failures"
 
 for i in {1.."$iterations"} ; do 
-    if docker exec attacker nc -z -w 1 "$CHILD_IP" ; then
+    if docker exec attacker nc -z -w 1 "$CHILD_IP" 23 ; then
         ((attacker_success=attacker_success+1))
     fi
 done
