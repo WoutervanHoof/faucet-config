@@ -28,8 +28,8 @@ done
 
 server_failures=$((iterations-server_success))
 
-echo "Number of successful connections to the server:   $server_success"
-echo "Number of unsuccessful connections to the server: $server_failures"
+echo "#successful connections to the server through BR $number:   $server_success"
+echo "#unsuccessful connections to the server through BR $number: $server_failures"
 
 echo ""
 echo "Testing attacker..."
@@ -44,5 +44,5 @@ done
 
 attacker_failures=$((iterations-attacker_success))
 
-echo "Number of successful connections to the attacker:   $attacker_success"
-echo "Number of unsuccessful connections to the attacker: $attacker_failures"
+echo "#successful connections to the attacker through BR $number:   $attacker_success"
+echo "#unsuccessful connections to the attacker through BR $number: $attacker_failures"
