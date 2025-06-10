@@ -2,7 +2,13 @@
 
 set -eo pipefail
 
-iterations=5
+iterations=$1
+
+if [ -z "${iterations}" ] ; then
+    echo "usage: exp1.sh ITERATIONS"
+    exit 1
+fi
+
 timeout=0.5
 server_success=0
 attacker_success=0
