@@ -2,17 +2,18 @@
 
 set -eo pipefail
 
-iterations=$1
-
-if [ -z "${iterations}" ] ; then
-    echo "usage: exp1.sh ITERATIONS"
+if [[ $# != 3 ]] ; then
+    echo "usage: ./exp1.sh BR_NUMBER CHILD_IP ITERATIONS"
     exit 1
 fi
+
+number="$1"
+CHILD_IP="$2"
+iterations="$3"
 
 timeout=0.5
 server_success=0
 attacker_success=0
-CHILD_IP="fd71:666b:b2e1:bfd9:44ea:9c0a:d388:64ae"
 
 echo ""
 echo "Testing server..."
