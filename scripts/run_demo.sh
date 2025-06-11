@@ -117,8 +117,6 @@ border_router_up() {
         --ipaddress="$BORDER_ROUTER_SUBNET" \
         --gateway="$BORDER_ROUTER_FAUCET_VIP"
 
-    sudo docker exec thread-br ip route add "$VLANS_ROUTE" dev eth0
-
     PORT=`get_port_for_container_interface "thread-br" "eth0"`
     sudo ovs-vsctl set interface "$PORT" ofport_request=1
 }
