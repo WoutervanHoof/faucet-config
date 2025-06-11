@@ -2,16 +2,16 @@
 
 set -eo pipefail
 
-if [[ $# != 3 ]] ; then
-    echo "usage: ./exp1.sh BR_NUMBER CHILD_IP ITERATIONS"
+if [[ $# != 4 ]] ; then
+    echo "usage: ./exp1.sh BR_NUMBER CHILD_IP ITERATIONS TIMEOUT"
     exit 1
 fi
 
 NUMBER="$1"
 CHILD_IP="$2"
 iterations="$3"
+timeout="$4"
 
-timeout=0.5
 server_success=0
 attacker_success=0
 
