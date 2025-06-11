@@ -47,3 +47,14 @@ acls:
             ipv6_src: "fd99:aaaa:cccc::/48"
             actions:
                 allow: 1
+        - rule:
+            # Allow all traffick within the fd99... subnet (for demo/testing purposes)
+            dl_type: 0x86DD
+            ipv6_dst: "fd99:aaaa:dddd::/48"
+            actions:
+                allow: 1
+        - rule:
+            dl_type: 0x86DD
+            ipv6_src: "fd99:aaaa:dddd::/48"
+            actions:
+                allow: 1
