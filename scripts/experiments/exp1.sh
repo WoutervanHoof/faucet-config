@@ -25,9 +25,10 @@ echo "Testing server..."
 echo ""
 
 for i in $(seq "$iterations") ; do 
-    if docker exec server nc -v -z -w "$timeout" "$CHILD_IP" 23 ; then
+    if docker exec server nc -v -z -w 1 "$CHILD_IP" 23 ; then
         ((server_success+=1))
     fi
+    sleep "$timeout"
 done
 
 server_failures=$((iterations-server_success))
