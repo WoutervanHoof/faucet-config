@@ -5,6 +5,8 @@ get_network_layout() {
         VLAN_PREFIX="fd99:aaaa:bbbb"
     elif [[ "$NUMBER" == "2" ]] ; then
         VLAN_PREFIX="fd99:aaaa:cccc"
+    elif [[ "$NUMBER" == "3" ]] ; then
+        VLAN_PREFIX="fd99:aaaa:dddd"
     else
         echo "unspecified number: $NUMBER"
         exit 1

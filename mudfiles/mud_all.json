@@ -20,7 +20,7 @@
             "access-lists": {
                 "access-list": [
                     {
-                        "name": "allow-allo-to-device"
+                        "name": "allow-all-to-device"
                     }
                 ]
             }

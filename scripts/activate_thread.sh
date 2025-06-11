@@ -76,5 +76,5 @@ docker exec "$container_name" curl -s \
         "networkName":"OpenThreadDemo"}' \
     "${url}/form_network"
 
-
+docker exec thread-br ip route add "$VLANS_ROUTE" dev eth0
 docker exec thread-br ot-ctl netdata publish route "$VLANS_ROUTE" s high

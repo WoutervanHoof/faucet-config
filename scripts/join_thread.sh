@@ -56,4 +56,5 @@ else
     exit 1
 fi
 
+docker exec thread-br ip route add "$VLANS_ROUTE" dev eth0
 docker exec thread-br ot-ctl netdata publish route "$VLANS_ROUTE" s high

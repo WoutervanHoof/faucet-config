@@ -72,12 +72,48 @@ vlans:
             - 'fd99:aaaa:cccc:300::1/64'
         acls_in:
             - allow-mud
+            - block-openthread 
+    border_router_3:
+        vid: 103
+        description: "VLAN for Thread border router"
+        faucet_mac: "0e:00:00:00:10:01"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:1001/64'
+            - 'fd99:aaaa:dddd:100::1/64'
+        routes:
+            - route:
+                ip_dst: 'fd71:666b:b2e1:bfd9::/64'
+                ip_gw: 'fd99:aaaa:dddd:100::2'
+        acls_in:
+            - allow-mud
+            - block-openthread
+    admin_3:
+        vid: 203
+        description: "VLAN for admin services"
+        faucet_mac: "0e:00:00:00:20:11"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:2011/64'
+            - 'fd99:aaaa:dddd:200::1/64'
+        acls_in:
+            - allow-mud
+            - block-openthread
+    attacker_3:
+        vid: 303
+        description: "VLAN for attacker box/untrusted vlan"
+        faucet_mac: "0e:00:00:00:30:11"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:3011/64'
+            - 'fd99:aaaa:dddd:300::1/64'
+        acls_in:
+            - allow-mud
             - block-openthread
 routers:
     router1:
         vlans: [border_router_1, admin_1, attacker_1 ]
     router2:
         vlans: [border_router_2, admin_2, attacker_2 ]
+    router3:
+        vlans: [border_router_3, admin_3, attacker_3 ]
 
 dps:
     sw1:
@@ -112,3 +148,19 @@ dps:
                 name: "Attacker2"
                 description: "Test interface to ping from"
                 native_vlan: attacker_2
+    sw3:
+        dp_id: 0x3
+        hardware: "Open vSwitch"
+        interfaces:
+            1:
+                name: "ThreadBR3"
+                description: "thread interface"
+                native_vlan: border_router_3
+            2:
+                name: "Admin3"
+                description: "Attacker machine"
+                native_vlan: admin_3
+            3:
+                name: "Attacker3"
+                description: "Test interface to ping from"
+                native_vlan: attacker_3
