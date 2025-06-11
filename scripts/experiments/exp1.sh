@@ -15,7 +15,7 @@ timeout=0.5
 server_success=0
 attacker_success=0
 
-source ../network_layout.sh
+source ~/faucet-config/scripts/network_layout.sh
 get_network_layout
 # This route gets added sometimes, I havent figured out yet how to prevent it
 docker exec thread-br ip route del "$VLANS_ROUTE" dev wpan0 || true
@@ -25,10 +25,9 @@ echo "Testing server..."
 echo ""
 
 for i in $(seq "$iterations") ; do 
-    if docker exec server nc -v -z -w 1 "$CHILD_IP" 23 ; then
+    if docker exec server nc -v -z -w "$timeout" "$CHILD_IP" 23 ; then
         ((server_success+=1))
     fi
-    sleep "$timeout"
 done
 
 server_failures=$((iterations-server_success))
