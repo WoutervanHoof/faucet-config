@@ -232,7 +232,7 @@ BRIDGE="br${NUMBER}"
 dumps_dir="/usr/share/dumps"
 
 if [[ ! -d "$dumps_dir" ]] ; then
-    mkdir -p "$dumps_dir"
+   sudo  mkdir -p "$dumps_dir"
 fi
 
 if [[ "$DOWN" = "1" ]] ; then 
