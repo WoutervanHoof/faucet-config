@@ -101,6 +101,10 @@ border_router_up() {
 	    --sysctl "net.ipv6.conf.all.disable_ipv6=0" \
 	    --sysctl "net.ipv4.conf.all.forwarding=1" \
 	    --sysctl "net.ipv6.conf.all.forwarding=1" \
+            --sysctl "net.ipv6.conf.default.accept_ra=0" \
+            --sysctl "net.ipv6.conf.default.autoconf=0" \
+            --sysctl "net.ipv6.conf.all.accept_ra=0" \
+            --sysctl "net.ipv6.conf.all.autoconf=0" \
 	    -p 8080:80 --dns=172.0.0.1 -it \
 	    --volume /dev/ttyACM0:/dev/ttyACM0 \
 	    --volume "$dumps_dir":"$dumps_dir" \
@@ -112,6 +116,8 @@ border_router_up() {
     sudo ovs-docker add-port "$BRIDGE" eth0 thread-br \
         --ipaddress="$BORDER_ROUTER_SUBNET" \
         --gateway="$BORDER_ROUTER_FAUCET_VIP"
+
+    sudo docker exec thread-br ip route add "$VLANS_ROUTE" dev eth0
 
     PORT=`get_port_for_container_interface "thread-br" "eth0"`
     sudo ovs-vsctl set interface "$PORT" ofport_request=1

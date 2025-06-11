@@ -20,7 +20,7 @@ echo "Testing server..."
 echo ""
 
 for i in $(seq "$iterations") ; do 
-    if docker exec server nc -z -w 1 "$CHILD_IP" 23 ; then
+    if docker exec server nc -v -z -w 1 "$CHILD_IP" 23 ; then
         ((server_success+=1))
     fi
     sleep "$timeout"
@@ -36,7 +36,7 @@ echo "Testing attacker..."
 echo ""
 
 for i in $(seq "$iterations") ; do 
-    if docker exec attacker nc -z -w 1 "$CHILD_IP" 23 ; then
+    if docker exec attacker nc -v -z -w 1 "$CHILD_IP" 23 ; then
         ((attacker_success+=1))
     fi
     sleep "$timeout"
