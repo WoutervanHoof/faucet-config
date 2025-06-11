@@ -18,7 +18,7 @@ attacker_success=0
 source ../network_layout.sh
 get_network_layout
 # This route gets added sometimes, I havent figured out yet how to prevent it
-docker exec thread-br ip route del "$VLANS_ROUTE" dev wpan0
+docker exec thread-br ip route del "$VLANS_ROUTE" dev wpan0 || true
 
 echo ""
 echo "Testing server..."
