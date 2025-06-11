@@ -44,7 +44,6 @@ for i in $(seq "$iterations") ; do
     if docker exec attacker nc -v -z -w 1 "$CHILD_IP" 23 ; then
         ((attacker_success+=1))
     fi
-    sleep "$timeout"
 done
 
 attacker_failures=$((iterations-attacker_success))
