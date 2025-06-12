@@ -25,6 +25,7 @@ echo "Testing server..."
 echo ""
 
 for i in $(seq "$iterations") ; do 
+    echo -n "$i "
     if docker exec server nc -v -z -w 1 "$CHILD_IP" 23 ; then
         ((server_success+=1))
     fi
@@ -41,6 +42,7 @@ echo "Testing attacker..."
 echo ""
 
 for i in $(seq "$iterations") ; do 
+    echo -n "$i "
     if docker exec attacker nc -v -z -w 1 "$CHILD_IP" 23 ; then
         ((attacker_success+=1))
     fi
