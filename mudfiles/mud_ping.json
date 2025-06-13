@@ -1,0 +1,119 @@
+{
+    "ietf-mud:mud": {
+        "mud-version": 1,
+        "mud-url": "http://localhost:3001/mud_telnet.json",
+        "last-update": "2025-03-12T10:03:00+01:00",
+        "mud-signature": "",
+        "cache-validity": 48,
+        "is-supported": true,
+        "systeminfo": "MultiMUD (TODO title) example",
+        "from-device-policy": {
+            "access-lists": {
+                "access-list": [
+                    {
+                        "name": "allow-icmpv6-from-device-to-manager"
+                    },
+                    {
+                        "name": "allow-icmpv6-from-device-to-manager2"
+                    }
+                ]
+            }
+        },
+        "to-device-policy": {
+            "access-lists": {
+                "access-list": [
+                    {
+                        "name": "allow-icmpv6-to-device-from-manager"
+                    },
+                    {
+                        "name": "allow-icmpv6-to-device-from-manager2"
+                    }
+                ]
+            }
+        }
+    },
+    "ietf-access-control-list:acls": {
+        "acl": [
+            {
+                "name": "allow-icmpv6-to-device-from-manager",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-icmp",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:src-dnsname": "manager.local",
+                                    "protocol": 58
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "allow-icmpv6-from-device-to-manager",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-icmp",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:dst-dnsname": "manager.local",
+                                    "protocol": 58
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "allow-icmpv6-to-device-from-manager2",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-icmp",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:src-dnsname": "manager2.local",
+                                    "protocol": 58
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "allow-icmpv6-from-device-to-manager2",
+                "type": "ipv6-acl-type",
+                "aces": {
+                    "ace": [
+                        {
+                            "name": "allow-icmp",
+                            "matches": {
+                                "ipv6": {
+                                    "ietf-mud:dst-dnsname": "manager2.local",
+                                    "protocol": 58
+                                }
+                            },
+                            "actions": {
+                                "forwarding": "accept"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
