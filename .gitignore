@@ -1,4 +1,6 @@
 volumes/etc/faucet/acls/
+volumes/etc/faucet/faucet.yaml
+volumes/etc/faucet/acls.yaml
 volumes/opt/grafana/
 volumes/opt/prometheus/
 volumes/var/log/faucet/
