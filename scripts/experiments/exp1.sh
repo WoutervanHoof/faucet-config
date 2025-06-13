@@ -12,43 +12,28 @@ CHILD_IP="$2"
 iterations="$3"
 timeout="$4"
 
-server_success=0
-attacker_success=0
-
 source ~/faucet-config/scripts/network_layout.sh
 get_network_layout
 # This route gets added sometimes, I havent figured out yet how to prevent it
 docker exec thread-br ip route del "$VLANS_ROUTE" dev wpan0 || true
 
-echo ""
-echo "Testing server..."
-echo ""
+for role in "server" "attacker" ; do
+    successes=0
 
-for i in $(seq "$iterations") ; do 
-    echo -n "$i "
-    if docker exec server nc -v -z -w 1 "$CHILD_IP" 23 ; then
-        ((server_success+=1))
-    fi
-    sleep "$timeout"
-done
+    echo ""
+    echo "Testing $role..."
+    echo ""
 
-server_failures=$((iterations-server_success))
+    for i in $(seq "$iterations") ; do 
+        echo -n "$i "
+        if docker exec "$role" nc -v -z -w 1 "$CHILD_IP" 23 ; then
+            ((successes+=1))
+        fi
+        sleep "$timeout"
+    done
 
-echo "#successful connections to the server through BR $NUMBER:   $server_success"
-echo "#unsuccessful connections to the server through BR $NUMBER: $server_failures"
+    failures=$((iterations-successes))
 
-echo ""
-echo "Testing attacker..."
-echo ""
-
-for i in $(seq "$iterations") ; do 
-    echo -n "$i "
-    if docker exec attacker nc -v -z -w 1 "$CHILD_IP" 23 ; then
-        ((attacker_success+=1))
-    fi
-done
-
-attacker_failures=$((iterations-attacker_success))
-
-echo "#successful connections to the attacker through BR $NUMBER:   $attacker_success"
-echo "#unsuccessful connections to the attacker through BR $NUMBER: $attacker_failures"
+    echo "#successes connections to the $role through BR $NUMBER:   $successes"
+    echo "#failures connections to the $role through BR $NUMBER: $failures"
+done 
