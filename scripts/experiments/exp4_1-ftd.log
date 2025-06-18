@@ -22,4 +22,1232 @@ ot reset˙
 
 uart:~$ tcpdump: listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 vxv
+uart:~$ rm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot resetç
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+Finished detachinguart:~$ 
+uart:~$ 
+Donerm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+Finished detachinguart:~$ 
+uart:~$ 
+Donerm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+Finished detachinguart:~$ 
+uart:~$ 
+Donerm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+Finished detachinguart:~$ 
+uart:~$ 
+Donerm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+Finished detachinguart:~$ 
+uart:~$ 
+Donerm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+Finished detachinguart:~$ 
+uart:~$ 
+Donerm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot reset˛
+
+uart:~$ ot state
+disabled
+Done
+uart:~$ ot idataset active
+Active Timestamp: 1
+Channel: 15
+Channel Mask: 0x07fff800
+Ext PAN ID: beef1111cafe2222
+Mesh Local Prefix: fd64:5f14:78bc:5c23::/64
+Network Key: 00112233445566778899aabbccddeeff
+Network Name: OpenThreadDemo
+PAN ID: 0x1234
+PSKc: d277ca1abce4fa82c5307f06f490d866
+Security Policy: 672 onrc 0
+Done
+uart:~$ ot aifconfig up
+Done
+uart:~$ ot thread start
+Done
+uart:~$ ot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+DoneDone!
+
+
+uart:~$ lot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$script "exp4.sh": global timeout
+ 
+uart:~$ ot thread start
+uart:~$ ot 
+ot: wrong parameter count
+ot - OpenThread subcommands
+Use "ot help" to get the list of subcommands
+uart:~$ 
+uart:~$ 
+uart:~$ ot state
+child
+Done
+uart:~$ ot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ 
+uart:~$ 
+uart:~$ 
+uart:~$ 
+uart:~$ ot state
+child
+Done
+uart:~$ ot state
+uart:~$ jot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetç
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetç
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneg/scripts/experiments
+~/projects/thesis/faucet-config/scripts/experiments: command not found
+uart:~$ ot
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetç
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot resetˇ
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Doneot reset˛
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+DoneDone!
+
+rm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Donekill: (2235): No such process
+ot reset
+
+uart:~$ ot ifconfig up
+Done
+uart:~$ot thread start
+Done
+uart:~$ot detach
+uart:~$ 
+uart:~$ Finished detaching
+Donekill: (2284): No such process
+ot resetˇ
+
+uart:~$ 
+uart:~$ 
+uart:~$ 
+uart:~$ 
 uart:~$ 

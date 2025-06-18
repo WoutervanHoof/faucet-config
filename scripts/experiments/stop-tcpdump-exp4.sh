@@ -1,7 +1,8 @@
 #!/bin/sh
-if [ -f /var/run/tcpdump.pid ]
+FILE="/home/wouter/tcpdump.pid"
+if [ -f "$FILE" ]
 then
-        sudo kill `cat /var/run/tcpdump.pid`
-        sudo echo tcpdump `cat /var/run/tcpdump.pid` killed.
-        sudo rm -f /var/run/tcpdump.pid
+        sudo kill `cat "$FILE"`
+        sudo echo tcpdump `cat "$FILE"` killed.
+        sudo rm -f "$FILE"
 fi
