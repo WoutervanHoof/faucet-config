@@ -1,0 +1,25 @@
+./
+uart:~$ ot resetþ
+
+uart:~$ tcpdump: listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+
+uart:~$ 
+uart:~$ 
+uart:~$ 
+uart:~$ 
+uart:~$ 
+uart:~$ 
+uart:~$ rm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot resetþ
+
+uart:~$ tcpdump: listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+
+uart:~$ exit
+exit: command not found
+uart:~$ 
+uart:~$ rm: cannot remove '/var/mudfiles/3000_mud.json': No such file or directory
+ot resetú
+
+uart:~$ tcpdump: listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+vxv
+uart:~$ 
