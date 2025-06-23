@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+
 if [[ $# != 1 ]] ; then
     echo "missing required argument. Usage: ./start_tcpdump-exp4.sh File_Base_Name"
 fi
