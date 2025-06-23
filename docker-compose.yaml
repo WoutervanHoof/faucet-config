@@ -10,6 +10,7 @@ include:
 
 services:
     mudfileserver:
+        restart: on-failure
         build:
             context: .
             dockerfile: ./docker/Dockerfile.mud_fileserver

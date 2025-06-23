@@ -1,5 +1,6 @@
 services:    
     mud-manager:
+        restart: on-failure
         volumes:
             - '${FAUCET_PREFIX}/etc/faucet/:/etc/faucet/'
         links:

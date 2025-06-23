@@ -1,4 +1,10 @@
 services:
+    prometheus:
+        restart: on-failure
+    grafana:
+        restart: on-failure
     faucet:
         environment:
             FAUCET_CONFIG_STAT_RELOAD: '1'
+    gauge:
+        restart: on-failure
