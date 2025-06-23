@@ -4,9 +4,9 @@ timeout 1500s
 
 set a 0
 loop:
-if a = 5 goto finish
 ! ssh wouter@10.42.0.10 -- sudo /home/wouter/faucet-config/scripts/experiments/stop-tcpdump-exp4.sh
 # ! ssh wouter@10.42.0.170 -- sudo /home/wouter/faucet-config/scripts/experiments/stop-tcpdump-exp4.sh
+if a = 5 goto finish
 ! /home/wouter/projects/thesis/faucet-config/scripts/reset_demo.sh
 
 inc a
