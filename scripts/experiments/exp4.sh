@@ -31,7 +31,7 @@ expect {
 }
 
 detach:
-sleep 5
+sleep 10
 
 send ot detach\n
 expect {
