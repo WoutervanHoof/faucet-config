@@ -6,3 +6,7 @@ volumes/opt/prometheus/
 volumes/var/log/faucet/
 
 dumps
+
+*.log
+*.ipynb_checkpoints
+*.ash_history
