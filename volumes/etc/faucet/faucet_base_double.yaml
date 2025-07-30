@@ -1,0 +1,113 @@
+include:
+    - acls.yaml
+
+vlans:
+    border_router_1:
+        vid: 100
+        description: "VLAN for Thread border router"
+        faucet_mac: "0e:00:00:00:10:01"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:1001/64'
+            - 'fd99:aaaa:bbbb:100::1/64'
+            - '10.0.101.254/24'
+        routes:
+            - route:
+                ip_dst: 'fd71:666b:b2e1:bfd9::/64'
+                ip_gw: 'fd99:aaaa:bbbb:100::2'
+        acls_in:
+            - allow-mud
+            - block-thread
+    admin_1:
+        vid: 200
+        description: "VLAN for admin services"
+        faucet_mac: "0e:00:00:00:20:01"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:2001/64'
+            - 'fd99:aaaa:bbbb:200::1/64'
+            - '10.0.102.254/24'
+        acls_in:
+            - allow-mud
+            - block-thread
+    attacker_1:
+        vid: 300
+        description: "VLAN for attacker box/untrusted vlan"
+        faucet_mac: "0e:00:00:00:30:01"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:3001/64'
+            - 'fd99:aaaa:bbbb:300::1/64'
+            - '10.0.103.254/24'
+        acls_in:
+            - allow-mud
+            - block-thread
+    border_router_2:
+        vid: 101
+        description: "VLAN for Thread border router"
+        faucet_mac: "0e:00:00:00:10:01"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:1001/64'
+            - 'fd99:aaaa:cccc:100::1/64'
+        routes:
+            - route:
+                ip_dst: 'fd71:666b:b2e1:bfd9::/64'
+                ip_gw: 'fd99:aaaa:cccc:100::2'
+        acls_in:
+            - allow-mud
+            - block-thread
+    admin_2:
+        vid: 201
+        description: "VLAN for admin services"
+        faucet_mac: "0e:00:00:00:20:11"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:2011/64'
+            - 'fd99:aaaa:cccc:200::1/64'
+        acls_in:
+            - allow-mud
+            - block-thread
+    attacker_2:
+        vid: 301
+        description: "VLAN for attacker box/untrusted vlan"
+        faucet_mac: "0e:00:00:00:30:11"
+        faucet_vips:
+            - 'fe80::c00:00ff:fe00:3011/64'
+            - 'fd99:aaaa:cccc:300::1/64'
+        acls_in:
+            - allow-mud
+            - block-thread 
+routers:
+    router1:
+        vlans: [border_router_1, admin_1, attacker_1 ]
+    router2:
+        vlans: [border_router_2, admin_2, attacker_2 ]
+dps:
+    sw1:
+        dp_id: 0x1
+        hardware: "Open vSwitch"
+        interfaces:
+            1:
+                name: "ThreadBR1"
+                description: "thread interface"
+                native_vlan: border_router_1
+            2:
+                name: "Admin1"
+                description: "Attacker machine"
+                native_vlan: admin_1
+            3:
+                name: "Attacker1"
+                description: "Test interface to ping from"
+                native_vlan: attacker_1
+    sw2:
+        dp_id: 0x2
+        hardware: "Open vSwitch"
+        interfaces:
+            1:
+                name: "ThreadBR2"
+                description: "thread interface"
+                native_vlan: border_router_2
+            2:
+                name: "Admin2"
+                description: "Attacker machine"
+                native_vlan: admin_2
+            3:
+                name: "Attacker2"
+                description: "Test interface to ping from"
+                native_vlan: attacker_2
