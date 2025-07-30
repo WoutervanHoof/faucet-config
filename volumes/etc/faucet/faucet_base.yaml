@@ -16,7 +16,7 @@ vlans:
                 ip_gw: 'fd99:aaaa:bbbb:100::2'
         acls_in:
             - allow-mud
-            - block-openthread
+            - block-thread
     admin_1:
         vid: 200
         description: "VLAN for admin services"
@@ -27,7 +27,7 @@ vlans:
             - '10.0.102.254/24'
         acls_in:
             - allow-mud
-            - block-openthread
+            - block-thread
     attacker_1:
         vid: 300
         description: "VLAN for attacker box/untrusted vlan"
@@ -38,7 +38,7 @@ vlans:
             - '10.0.103.254/24'
         acls_in:
             - allow-mud
-            - block-openthread
+            - block-thread
     border_router_2:
         vid: 101
         description: "VLAN for Thread border router"
@@ -52,7 +52,7 @@ vlans:
                 ip_gw: 'fd99:aaaa:cccc:100::2'
         acls_in:
             - allow-mud
-            - block-openthread
+            - block-thread
     admin_2:
         vid: 201
         description: "VLAN for admin services"
@@ -62,7 +62,7 @@ vlans:
             - 'fd99:aaaa:cccc:200::1/64'
         acls_in:
             - allow-mud
-            - block-openthread
+            - block-thread
     attacker_2:
         vid: 301
         description: "VLAN for attacker box/untrusted vlan"
@@ -72,7 +72,7 @@ vlans:
             - 'fd99:aaaa:cccc:300::1/64'
         acls_in:
             - allow-mud
-            - block-openthread 
+            - block-thread 
     border_router_3:
         vid: 103
         description: "VLAN for Thread border router"
@@ -86,7 +86,7 @@ vlans:
                 ip_gw: 'fd99:aaaa:dddd:100::2'
         acls_in:
             - allow-mud
-            - block-openthread
+            - block-thread
     admin_3:
         vid: 203
         description: "VLAN for admin services"
@@ -96,7 +96,7 @@ vlans:
             - 'fd99:aaaa:dddd:200::1/64'
         acls_in:
             - allow-mud
-            - block-openthread
+            - block-thread
     attacker_3:
         vid: 303
         description: "VLAN for attacker box/untrusted vlan"
@@ -106,7 +106,7 @@ vlans:
             - 'fd99:aaaa:dddd:300::1/64'
         acls_in:
             - allow-mud
-            - block-openthread
+            - block-thread
 routers:
     router1:
         vlans: [border_router_1, admin_1, attacker_1 ]
