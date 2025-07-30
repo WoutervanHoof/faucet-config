@@ -36,24 +36,25 @@ get_network_layout
 NET_KEY="00112233445566778899aabbccddeeff"
 url="http://[${BORDER_ROUTER_IP}]:80"
 
-if docker exec "$container_name" \
+while ! docker exec "$container_name" \
     curl -s -H "Content-Type: application/json" \
         "${url}/available_network" \
-    | grep -q "\"error\":0"
-then 
-    docker exec "$container_name" \
-        curl -s -H "Content-Type: application/json" \
-            --request POST --data '{
-                "credentialType":"networkKeyType",
-                "networkKey":"'"${NET_KEY}"'",
-                "prefix":"'"${OMR_PREFIX}"'",
-                "defaultRoute":false,
-                "index":0
-            }' \
-            "${url}/join_network"
-else
-    echo "Failed to get available networks"
-    exit 1
-fi
+    | grep -q "\"error\":0" 
+do
+	echo "sleeping then trying again"
+    sleep 5
+done
+
+
+docker exec "$container_name" \
+    curl -s -H "Content-Type: application/json" \
+        --request POST --data '{
+            "credentialType":"networkKeyType",
+            "networkKey":"'"${NET_KEY}"'",
+            "prefix":"'"${OMR_PREFIX}"'",
+            "defaultRoute":false,
+            "index":0
+        }' \
+        "${url}/join_network"
 
 docker exec thread-br ot-ctl netdata publish route "$VLANS_ROUTE" s high
