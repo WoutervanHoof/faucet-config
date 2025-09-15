@@ -6,7 +6,7 @@
         "mud-signature": "",
         "cache-validity": 48,
         "is-supported": true,
-        "systeminfo": "MultiMUD (TODO title) example",
+        "systeminfo": "Distri-MUD telnet example",
         "from-device-policy": {
             "access-lists": {
                 "access-list": [
